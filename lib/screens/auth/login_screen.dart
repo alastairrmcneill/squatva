@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:squatva/services/auth_service.dart';
+import 'package:squatva/widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign In Screen'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('Sign In'),
-          onPressed: () async {
-            await AuthService.signInWithEmail(context, email: 'test@test.com', password: '123456');
-          },
+      body: SafeArea(
+        child: Column(
+          children: [],
         ),
       ),
     );

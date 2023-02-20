@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:squatva/support/theme.dart';
 import 'package:squatva/support/wrapper.dart';
 
 import 'services/services.dart';
@@ -28,9 +29,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Squatva',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: MyThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         home: const Wrapper(),
       ),
