@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:squatva/services/services.dart';
 
 class RegisterButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -16,12 +17,12 @@ class RegisterButton extends StatelessWidget {
   }) : super(key: key);
 
   Future _register(BuildContext context) async {
-    // await AuthService.registerWithEmail(
-    //   context,
-    //   email: emailController.text.trim(),
-    //   password: passwordController.text.trim(),
-    //   name: nameController.text.trim(),
-    // );
+    await AuthService.registerWithEmail(
+      context,
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      name: nameController.text.trim(),
+    );
   }
 
   @override

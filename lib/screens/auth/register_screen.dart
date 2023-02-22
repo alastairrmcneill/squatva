@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:squatva/widgets/auth/confirm_password_form_field.dart';
 import 'package:squatva/widgets/widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,6 +35,11 @@ class RegisterScreen extends StatelessWidget {
                     EmailFormField(textEditingController: _emailController),
                     const SizedBox(height: 10),
                     PasswordFormField(textEditingController: _passwordController),
+                    const SizedBox(height: 10),
+                    ConfirmPasswordFormField(
+                      confirmPassword_TextEditingController: _confirmPasswordController,
+                      password_TextEditingController: _passwordController,
+                    ),
                     const SizedBox(height: 10),
                     RegisterButton(formKey: _formKey, nameController: _nameController, emailController: _emailController, passwordController: _passwordController),
                   ],

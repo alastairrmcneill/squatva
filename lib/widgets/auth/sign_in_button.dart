@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:squatva/services/services.dart';
 
 class SignInButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -7,11 +8,11 @@ class SignInButton extends StatelessWidget {
   const SignInButton({Key? key, required this.formKey, required this.emailController, required this.passwordController}) : super(key: key);
 
   Future _login(BuildContext context) async {
-    // await AuthService.signInWithEmail(
-    //   context,
-    //   email: emailController.text.trim(),
-    //   password: passwordController.text.trim(),
-    // );
+    await AuthService.signInWithEmail(
+      context,
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
   }
 
   @override

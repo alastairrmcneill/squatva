@@ -10,7 +10,7 @@ class AuthService {
   }
 
   // Register with email
-  static Future registerWithEmail(BuildContext context, {required String email, required String password}) async {
+  static Future registerWithEmail(BuildContext context, {required String email, required String password, required String name}) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {

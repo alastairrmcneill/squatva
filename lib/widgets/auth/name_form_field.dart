@@ -15,6 +15,9 @@ class NameFormField extends StatelessWidget {
       ),
       maxLines: 1,
       keyboardType: TextInputType.name,
+      onChanged: (value) {
+        textEditingController.text = value.trim();
+      },
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return 'Required';

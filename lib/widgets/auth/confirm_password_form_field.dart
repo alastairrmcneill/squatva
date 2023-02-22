@@ -1,21 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-class PasswordFormField extends StatefulWidget {
-  final TextEditingController textEditingController;
-  const PasswordFormField({Key? key, required this.textEditingController}) : super(key: key);
+class ConfirmPasswordFormField extends StatefulWidget {
+  final TextEditingController confirmPassword_TextEditingController;
+  final TextEditingController password_TextEditingController;
+  const ConfirmPasswordFormField({
+    Key? key,
+    required this.confirmPassword_TextEditingController,
+    required this.password_TextEditingController,
+  }) : super(key: key);
 
   @override
-  State<PasswordFormField> createState() => _PasswordFormFieldState();
+  State<ConfirmPasswordFormField> createState() => _PasswordFormFieldState();
 }
 
-class _PasswordFormFieldState extends State<PasswordFormField> {
+class _PasswordFormFieldState extends State<ConfirmPasswordFormField> {
   bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: 'Password',
+        labelText: 'Confirm Password',
         floatingLabelBehavior: FloatingLabelBehavior.never,
         prefixIcon: const Icon(Icons.lock_outline),
         suffixIcon: IconButton(
@@ -31,7 +37,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       keyboardType: TextInputType.visiblePassword,
       obscureText: _obscureText,
       onChanged: (value) {
-        widget.textEditingController.text = value.trim();
+        widget.confirmPassword_TextEditingController.text = value.trim();
       },
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
@@ -40,9 +46,14 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         if (value.length < 5) {
           return 'Password needs to be greater than 6 characters';
         }
+        print(widget.password_TextEditingController.text);
+        print(value.trim());
+        if (widget.password_TextEditingController.text != value.trim()) {
+          return 'Passwords must match';
+        }
       },
       onSaved: (value) {
-        widget.textEditingController.text = value!.trim();
+        widget.confirmPassword_TextEditingController.text = value!.trim();
       },
     );
   }
