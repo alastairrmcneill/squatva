@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:squatva/services/auth_service.dart';
 import 'package:squatva/widgets/widgets.dart';
 
 class SocialSignInRow extends StatelessWidget {
@@ -20,7 +21,7 @@ class SocialSignInRow extends StatelessWidget {
               color: Colors.red,
             ),
             function: () async {
-              print('Google');
+              await AuthService.signInWithGoogle(context);
             }),
         Platform.isIOS
             ? SocialSignIn(
@@ -30,7 +31,7 @@ class SocialSignInRow extends StatelessWidget {
                   "assets/icons/apple_sign_in_icon.png",
                 ),
                 function: () async {
-                  print('Apple');
+                  await AuthService.signInWithApple(context);
                 })
             : const SizedBox(),
         SocialSignIn(
