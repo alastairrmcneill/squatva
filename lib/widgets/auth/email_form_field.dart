@@ -16,9 +16,6 @@ class EmailFormField extends StatelessWidget {
       maxLines: 1,
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
-      onChanged: (value) {
-        textEditingController.text = value.trim();
-      },
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return 'Required';

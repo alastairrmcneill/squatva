@@ -7,7 +7,7 @@ class SignInButton extends StatelessWidget {
   final TextEditingController passwordController;
   const SignInButton({Key? key, required this.formKey, required this.emailController, required this.passwordController}) : super(key: key);
 
-  Future _login(BuildContext context) async {
+  Future _signIn(BuildContext context) async {
     await AuthService.signInWithEmail(
       context,
       email: emailController.text.trim(),
@@ -26,7 +26,7 @@ class SignInButton extends StatelessWidget {
             return;
           }
           formKey.currentState!.save();
-          await _login(context);
+          await _signIn(context);
         },
         child: const Text('Sign In'),
       ),

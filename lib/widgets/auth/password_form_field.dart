@@ -31,7 +31,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       keyboardType: TextInputType.visiblePassword,
       obscureText: _obscureText,
       onChanged: (value) {
-        widget.textEditingController.text = value.trim();
+        widget.textEditingController.text = value;
       },
       validator: (value) {
         if (value == null || value.trim().isEmpty) {

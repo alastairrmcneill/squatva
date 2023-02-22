@@ -14,10 +14,8 @@ class NameFormField extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       maxLines: 1,
+      textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.name,
-      onChanged: (value) {
-        textEditingController.text = value.trim();
-      },
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return 'Required';

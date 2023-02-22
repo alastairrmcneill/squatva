@@ -8,7 +8,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({Key? key}) : super(key: key);
 
   Future _forgotPassword(BuildContext context) async {
-    // await AuthService.forgotPassword(context, email: _emailController.text.trim());
+    await AuthService.forgotPassword(context, email: _emailController.text.trim());
   }
 
   @override
@@ -48,6 +48,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       return;
                     }
                     _formKey.currentState!.save();
+
                     await _forgotPassword(context);
                   },
                   child: const Text('Send email'),

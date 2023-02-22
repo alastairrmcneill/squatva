@@ -8,7 +8,7 @@ class ErrorDialog extends StatelessWidget {
   final String message;
   const ErrorDialog({
     Key? key,
-    this.title = 'Error',
+    required this.title,
     required this.message,
   }) : super(key: key);
 
@@ -42,4 +42,18 @@ class ErrorDialog extends StatelessWidget {
       ],
     );
   }
+}
+
+showErrorDialog(
+  BuildContext context, {
+  String title = 'Error',
+  required String message,
+}) {
+  showDialog(
+    context: context,
+    builder: (context) => ErrorDialog(
+      title: title,
+      message: message,
+    ),
+  );
 }

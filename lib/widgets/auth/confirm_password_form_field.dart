@@ -37,7 +37,7 @@ class _PasswordFormFieldState extends State<ConfirmPasswordFormField> {
       keyboardType: TextInputType.visiblePassword,
       obscureText: _obscureText,
       onChanged: (value) {
-        widget.confirmPassword_TextEditingController.text = value.trim();
+        widget.confirmPassword_TextEditingController.text = value;
       },
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
@@ -46,8 +46,6 @@ class _PasswordFormFieldState extends State<ConfirmPasswordFormField> {
         if (value.length < 5) {
           return 'Password needs to be greater than 6 characters';
         }
-        print(widget.password_TextEditingController.text);
-        print(value.trim());
         if (widget.password_TextEditingController.text != value.trim()) {
           return 'Passwords must match';
         }
