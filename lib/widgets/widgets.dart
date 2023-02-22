@@ -9,3 +9,4 @@ export 'auth/register_now_button.dart';
 export 'auth/register_button.dart';
 export 'auth/sign_in_button.dart';
 export 'auth/social_sign_in_button.dart';
+export 'auth/social_sign_in_row.dart';

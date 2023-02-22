@@ -18,7 +18,12 @@ class LoginScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               const LoginHeader(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 10),
+              Text(
+                'Please enter your details',
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 12),
+              ),
+              const SizedBox(height: 5),
               Form(
                 key: _formKey,
                 child: Column(
@@ -39,6 +44,8 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               const TextDivider(text: 'Or continue with'),
+              const SizedBox(height: 15),
+              const SocialSignInRow(),
               const RegisterNowButton()
             ],
           ),

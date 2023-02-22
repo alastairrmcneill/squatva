@@ -5,9 +5,26 @@ class LoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 250,
-      color: Colors.red,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const SizedBox(height: 30),
+          CircleAvatar(
+            radius: 60,
+            backgroundColor: Colors.transparent,
+            child: Image.asset(
+              "assets/icons/logo.png",
+            ),
+          ),
+          // const SizedBox(height: 10),
+          Text(
+            'Squatva',
+            style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 40, fontWeight: FontWeight.w300),
+          ),
+        ],
+      ),
     );
   }
 }
