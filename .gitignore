@@ -2,6 +2,10 @@
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 
+# API keys
+ios/Runner/Info.plist
+android/app/src/main/res/values/strings.xml
+
 # Miscellaneous
 *.class
 *.log
