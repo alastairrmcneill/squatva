@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:squatva/screens/screens.dart';
 import 'package:squatva/services/auth_service.dart';
 import 'package:squatva/widgets/widgets.dart';
 
@@ -15,13 +16,13 @@ class SocialSignInRow extends StatelessWidget {
       children: [
         SocialSignIn(
             backgroundColor: Colors.white,
-            borderColor: Colors.black,
+            borderColor: Colors.blue,
             icon: const Icon(
-              FontAwesomeIcons.google,
-              color: Colors.red,
+              Icons.email_outlined,
+              color: Colors.blue,
             ),
             function: () async {
-              await AuthService.signInWithGoogle(context);
+              Navigator.push(context, MaterialPageRoute(builder: (_) => RegisterScreen()));
             }),
         Platform.isIOS
             ? SocialSignIn(
@@ -35,14 +36,14 @@ class SocialSignInRow extends StatelessWidget {
                 })
             : const SizedBox(),
         SocialSignIn(
-            backgroundColor: Colors.blue,
-            borderColor: Colors.blue,
+            backgroundColor: Colors.white,
+            borderColor: Colors.black,
             icon: const Icon(
-              FontAwesomeIcons.facebookF,
-              color: Colors.white,
+              FontAwesomeIcons.google,
+              color: Colors.red,
             ),
             function: () async {
-              print('Facebook');
+              await AuthService.signInWithGoogle(context);
             }),
       ],
     );

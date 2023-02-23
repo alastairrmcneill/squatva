@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -9,6 +10,7 @@ import 'package:squatva/widgets/widgets.dart';
 class AuthService {
   static FirebaseAuth _auth = FirebaseAuth.instance;
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
+  static final FacebookAuth _facebookAuth = FacebookAuth.instance;
 
   // User stream
   static Stream<User?> get appUserStream {
@@ -104,14 +106,17 @@ class AuthService {
       if (credential.user!.displayName == null) {
         await credential.user!
             .updateDisplayName(
-              "${appleIdCredential.givenName ?? ""} ${appleIdCredential.familyName ?? ""}",
-            )
+          "${appleIdCredential.givenName ?? ""} ${appleIdCredential.familyName ?? ""}",
+        )
             .whenComplete(
-              () => credential.user!.reload(),
-            );
+          () async {
+            await credential.user!.reload();
+          },
+        );
       }
 
       // TODO: Create user and update notifiers
+      // use _auth.currentUser for the current user
 
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? "There was an error with Apple sign in.");
@@ -121,6 +126,21 @@ class AuthService {
   }
 
   // Sign in with facebook
+  // static Future signInWithFacebook(BuildContext context) async {
+  //   try {
+  //     LoginResult facebookLoginResult = await _facebookAuth.login(permissions: ['email']);
+
+  //     // if (facebookLoginResult.accessToken == null) return;
+
+  //     // OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(facebookLoginResult.accessToken!.token);
+
+  //     // UserCredential credential = await _auth.signInWithCredential(facebookAuthCredential);
+
+  //     // print(credential.user.toString());
+  //   } on FirebaseAuthException catch (error) {
+  //     showErrorDialog(context, message: error.message ?? "There was an issue with facebook login");
+  //   }
+  // }
 
   // Forgot password
   static Future forgotPassword(BuildContext context, {required String email}) async {
@@ -138,6 +158,9 @@ class AuthService {
 
   // Sign out
   static Future signOut() async {
+    if (_googleSignIn.currentUser != null) {
+      await _googleSignIn.disconnect();
+    }
     await _auth.signOut();
   }
 

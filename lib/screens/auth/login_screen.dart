@@ -42,11 +42,11 @@ class LoginScreen extends StatelessWidget {
                 emailController: _emailController,
                 passwordController: _passwordController,
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
               const TextDivider(text: 'Or continue with'),
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
               const SocialSignInRow(),
-              const RegisterNowButton()
+              // const RegisterNowButton()
             ],
           ),
         ),
