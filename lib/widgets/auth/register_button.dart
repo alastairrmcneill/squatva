@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:squatva/notifiers/notifiers.dart';
 import 'package:squatva/services/services.dart';
 
 class RegisterButton extends StatelessWidget {
@@ -32,11 +34,16 @@ class RegisterButton extends StatelessWidget {
       height: 40,
       child: ElevatedButton(
         onPressed: () async {
+          EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
+          if (!enableNotifier.registerEnabled) return;
+          enableNotifier.setRegisterEnabled = false;
+
           if (!formKey.currentState!.validate()) {
             return;
           }
           formKey.currentState!.save();
           await _register(context);
+          enableNotifier.setRegisterEnabled = true;
         },
         child: const Text('Register'),
       ),

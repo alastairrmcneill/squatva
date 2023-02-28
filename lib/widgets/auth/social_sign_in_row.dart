@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:squatva/notifiers/notifiers.dart';
 import 'package:squatva/screens/screens.dart';
 import 'package:squatva/services/auth_service.dart';
 import 'package:squatva/widgets/widgets.dart';
@@ -32,7 +34,12 @@ class SocialSignInRow extends StatelessWidget {
                   "assets/icons/apple_sign_in_icon.png",
                 ),
                 function: () async {
+                  EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
+                  if (!enableNotifier.appleSignInEnabled) return;
+                  enableNotifier.setAppleSignInEnabled = false;
+
                   await AuthService.signInWithApple(context);
+                  enableNotifier.setAppleSignInEnabled = true;
                 })
             : const SizedBox(),
         SocialSignIn(
@@ -43,7 +50,12 @@ class SocialSignInRow extends StatelessWidget {
               color: Colors.red,
             ),
             function: () async {
+              EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
+              if (!enableNotifier.googleSignInEnabled) return;
+              enableNotifier.setGoogleSignInEnabled = false;
+
               await AuthService.signInWithGoogle(context);
+              enableNotifier.setGoogleSignInEnabled = false;
             }),
       ],
     );

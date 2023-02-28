@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:squatva/notifiers/enable_notifier.dart';
 import 'package:squatva/services/services.dart';
 
 class SignInButton extends StatelessWidget {
@@ -22,11 +24,17 @@ class SignInButton extends StatelessWidget {
       height: 40,
       child: ElevatedButton(
         onPressed: () async {
+          EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
+          if (!enableNotifier.signInEnabled) return;
+          enableNotifier.setSignInEnabled = false;
+
           if (!formKey.currentState!.validate()) {
             return;
           }
           formKey.currentState!.save();
           await _signIn(context);
+
+          enableNotifier.setSignInEnabled = true;
         },
         child: const Text('Sign In'),
       ),

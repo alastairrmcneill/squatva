@@ -5,6 +5,7 @@ class EnableNotifier extends ChangeNotifier {
   bool passwordRecoveryEnabled = true;
   bool registerEnabled = true;
   bool googleSignInEnabled = true;
+  bool appleSignInEnabled = true;
 
   set setPasswordRecoveryEnabled(bool enabled) {
     passwordRecoveryEnabled = enabled;
@@ -20,5 +21,9 @@ class EnableNotifier extends ChangeNotifier {
 
   set setGoogleSignInEnabled(bool enabled) {
     googleSignInEnabled = enabled;
+  }
+
+  set setAppleSignInEnabled(bool enabled) {
+    appleSignInEnabled = enabled;
   }
 }

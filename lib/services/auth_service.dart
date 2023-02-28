@@ -4,7 +4,10 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:squatva/models/models.dart';
 import 'package:squatva/notifiers/notifiers.dart';
+import 'package:squatva/services/services.dart';
+import 'package:squatva/support/wrapper.dart';
 import 'package:squatva/widgets/widgets.dart';
 
 class AuthService {
@@ -17,11 +20,13 @@ class AuthService {
     return _auth.authStateChanges();
   }
 
+  // Current user id
+  static String? get currentUserId {
+    return _auth.currentUser?.uid;
+  }
+
   // Register with email
   static Future registerWithEmail(BuildContext context, {required String email, required String password, required String name}) async {
-    EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
-    if (!enableNotifier.registerEnabled) return;
-    enableNotifier.setRegisterEnabled = false;
     try {
       // Register in Firebase Auth
       UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
@@ -36,35 +41,35 @@ class AuthService {
             () => credential.user!.reload(),
           );
 
-      // TODO: Create user in database and update notifiers
+      AppUser appUser = AppUser(
+        uid: _auth.currentUser!.uid,
+        name: name,
+      );
+      await UserDatabase.create(context, appUser: appUser);
 
+      // TODO: Update notifiers
+      // TODO: Better way to push to wrapper
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (_) => false);
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? 'There was an error with authorisation.');
     }
-    enableNotifier.setRegisterEnabled = true;
   }
 
   // Sign in with email
   static Future signInWithEmail(BuildContext context, {required String email, required String password}) async {
-    EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
-    if (!enableNotifier.signInEnabled) return;
-    enableNotifier.setSignInEnabled = false;
     try {
       // Login to firebase
       UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       // TODO: read user from database and update notifiers
+
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? "There has been an error logging in.");
     }
-    enableNotifier.setSignInEnabled = true;
   }
 
   // Sign in with google
   static Future signInWithGoogle(BuildContext context) async {
-    EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
-    if (!enableNotifier.googleSignInEnabled) return;
-    enableNotifier.setGoogleSignInEnabled = false;
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
@@ -79,12 +84,16 @@ class AuthService {
 
       UserCredential credential = await _auth.signInWithCredential(googleCredential);
 
-      // TODO: Create user in database and update notifiers
+      if (_auth.currentUser == null) return;
 
+      AppUser appUser = AppUser(
+        uid: _auth.currentUser!.uid,
+        name: _auth.currentUser!.displayName!,
+      );
+      await UserDatabase.create(context, appUser: appUser);
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? 'There was an error with Google sign in.');
     }
-    enableNotifier.setGoogleSignInEnabled = true;
   }
 
   // Sign in with apple
@@ -115,15 +124,60 @@ class AuthService {
         );
       }
 
-      // TODO: Create user and update notifiers
-      // use _auth.currentUser for the current user
+      if (_auth.currentUser == null) return;
 
+      AppUser appUser = AppUser(
+        uid: _auth.currentUser!.uid,
+        name: _auth.currentUser!.displayName!,
+      );
+      await UserDatabase.create(context, appUser: appUser);
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? "There was an error with Apple sign in.");
     } on SignInWithAppleAuthorizationException catch (error) {
       showErrorDialog(context, message: error.message);
     }
   }
+
+  // Forgot password
+  static Future forgotPassword(BuildContext context, {required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      showSnackBar(context, 'Sent password reset email.');
+    } on FirebaseAuthException catch (error) {
+      showErrorDialog(context, message: error.message ?? 'There was an error with this process.');
+    }
+  }
+
+  // Sign out
+  static Future signOut(BuildContext context) async {
+    try {
+      UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      userNotifier.setCurrentUser = null;
+      if (_googleSignIn.currentUser != null) {
+        await _googleSignIn.disconnect();
+      }
+      await _auth.signOut();
+    } on FirebaseAuthException catch (error) {
+      showErrorDialog(context, message: error.message ?? "There was an error deleting your account");
+    }
+  }
+
+  // Delete account
+  static Future delete(BuildContext context) async {
+    try {
+      UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      userNotifier.setCurrentUser = null;
+      await UserDatabase.deleteUserWithUID(context, uid: _auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (error) {
+      showErrorDialog(context, message: error.message ?? "There was an error deleting your account");
+    }
+  }
+}
+
+
+
+
 
   // Sign in with facebook
   // static Future signInWithFacebook(BuildContext context) async {
@@ -141,31 +195,3 @@ class AuthService {
   //     showErrorDialog(context, message: error.message ?? "There was an issue with facebook login");
   //   }
   // }
-
-  // Forgot password
-  static Future forgotPassword(BuildContext context, {required String email}) async {
-    EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
-    if (!enableNotifier.passwordRecoveryEnabled) return;
-    enableNotifier.setPasswordRecoveryEnabled = false;
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-      showSnackBar(context, 'Sent password reset email.');
-    } on FirebaseAuthException catch (error) {
-      showErrorDialog(context, message: error.message ?? 'There was an error with this process.');
-    }
-    enableNotifier.setPasswordRecoveryEnabled = true;
-  }
-
-  // Sign out
-  static Future signOut() async {
-    if (_googleSignIn.currentUser != null) {
-      await _googleSignIn.disconnect();
-    }
-    await _auth.signOut();
-  }
-
-  // Delete account
-  static Future delete() async {
-    await _auth.currentUser?.delete();
-  }
-}

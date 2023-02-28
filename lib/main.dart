@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/notifiers/enable_notifier.dart';
+import 'package:squatva/notifiers/exercise_notifier.dart';
+import 'package:squatva/notifiers/notifiers.dart';
 import 'package:squatva/support/theme.dart';
 import 'package:squatva/support/wrapper.dart';
 
@@ -29,6 +30,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<EnableNotifier>(
           create: (_) => EnableNotifier(),
+        ),
+        ChangeNotifierProvider<UserNotifier>(
+          create: (_) => UserNotifier(),
+        ),
+        ChangeNotifierProvider<ExerciseNotifier>(
+          create: (_) => ExerciseNotifier(),
         ),
       ],
       child: MaterialApp(

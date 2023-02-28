@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:squatva/notifiers/notifiers.dart';
 import 'package:squatva/services/services.dart';
 import 'package:squatva/widgets/widgets.dart';
 
@@ -44,12 +46,18 @@ class ForgotPasswordScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
+                    EnableNotifier enableNotifier = Provider.of<EnableNotifier>(context, listen: false);
+                    if (!enableNotifier.passwordRecoveryEnabled) return;
+                    enableNotifier.setPasswordRecoveryEnabled = false;
+
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
                     _formKey.currentState!.save();
 
                     await _forgotPassword(context);
+
+                    enableNotifier.setPasswordRecoveryEnabled = true;
                   },
                   child: const Text('Send email'),
                 ),
