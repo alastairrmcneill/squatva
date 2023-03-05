@@ -1,6 +1,7 @@
 export 'pop_up_widgets/error_dialog.dart';
 export 'pop_up_widgets/create_exercise_dialog.dart';
 export 'pop_up_widgets/custom_snack_bar.dart';
+export 'pop_up_widgets/exercise_details_pop_up.dart';
 export 'general/text_divider.dart';
 export 'auth/email_form_field.dart';
 export 'auth/forgot_password_button.dart';

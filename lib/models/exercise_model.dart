@@ -1,42 +1,142 @@
 class Exercise {
-  final String id;
+  final String? id;
   final String name;
-  final String note;
-  final bool userMade;
-  final String muscleGroupID;
-  final ExerciseType exerciseType;
+  final String exerciseCategory;
+  final String limbInvolvement;
+  final String equipment;
+  final List<String> bodyParts;
+  final List<String> tags;
+  final String? link;
+  final String? note;
+  final String? userID;
 
   Exercise({
-    required this.id,
+    this.id,
     required this.name,
-    required this.note,
-    required this.userMade,
-    required this.muscleGroupID,
-    required this.exerciseType,
+    required this.exerciseCategory,
+    required this.limbInvolvement,
+    required this.equipment,
+    required this.bodyParts,
+    required this.tags,
+    this.link,
+    this.note,
+    this.userID,
   });
+
+  Map<String, Object?> toJSON() {
+    return {
+      ExerciseFields.id: id,
+      ExerciseFields.name: name,
+      ExerciseFields.exerciseCategory: exerciseCategory,
+      ExerciseFields.limbInvolvement: limbInvolvement,
+      ExerciseFields.equipment: equipment,
+      ExerciseFields.bodyParts: bodyParts,
+      ExerciseFields.tags: tags,
+      ExerciseFields.link: link,
+      ExerciseFields.note: note,
+      ExerciseFields.userID: userID,
+    };
+  }
+
+  static Exercise fromJSON(json) {
+    List<dynamic> bodyParts = json[ExerciseFields.bodyParts];
+    List<String> listBodyParts = List<String>.from(bodyParts);
+
+    List<dynamic> tags = json[ExerciseFields.tags];
+    List<String> listTags = List<String>.from(tags);
+
+    return Exercise(
+      id: json[ExerciseFields.id] as String?,
+      name: json[ExerciseFields.name] as String,
+      exerciseCategory: json[ExerciseFields.exerciseCategory] as String,
+      limbInvolvement: json[ExerciseFields.limbInvolvement] as String,
+      equipment: json[ExerciseFields.equipment] as String,
+      bodyParts: listBodyParts,
+      tags: listTags,
+      link: json[ExerciseFields.link] as String?,
+      note: json[ExerciseFields.note] as String?,
+      userID: json[ExerciseFields.userID] as String?,
+    );
+  }
+
+  Exercise copy({
+    String? id,
+    String? name,
+    String? exerciseCategory,
+    String? limbInvolvement,
+    String? equipment,
+    List<String>? bodyParts,
+    List<String>? tags,
+    String? link,
+    String? note,
+    String? userID,
+  }) {
+    return Exercise(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      exerciseCategory: exerciseCategory ?? this.exerciseCategory,
+      limbInvolvement: limbInvolvement ?? this.limbInvolvement,
+      equipment: equipment ?? this.equipment,
+      bodyParts: bodyParts ?? this.bodyParts,
+      tags: tags ?? this.tags,
+      note: note ?? this.note,
+      userID: userID ?? this.userID,
+    );
+  }
 }
 
-enum ExerciseType {
-  cardio,
-  strength,
-  plyometrics,
+class ExerciseFields {
+  static String id = 'id';
+  static String name = 'name';
+  static String exerciseCategory = 'exerciseCategory';
+  static String limbInvolvement = 'limbInvolvement';
+  static String equipment = 'equipment';
+  static String bodyParts = 'bodyParts';
+  static String tags = 'tags';
+  static String link = 'link';
+  static String note = 'note';
+  static String userID = 'userID';
 }
 
-List<Exercise> exercises = [
+class ExerciseCategory {
+  static String lowerPush = 'Lower Push';
+  static String lowerPull = 'Lower Pull';
+  static String upperPush = 'Upper Push';
+  static String upperPull = 'Upper Pull';
+  static String arms = 'arms';
+  static String trunk = 'trunk';
+  static String other = 'other';
+}
+
+class LimbInvolvement {
+  static String bilateral = 'bilateral';
+  static String unilateral = 'unilateral';
+}
+
+class Equipment {
+  static String bodyweight = 'bodyweight';
+  static String barbell = 'barbell';
+  static String dumbbell = 'dumbbell';
+  static String resistanceBand = 'resistanceBand';
+  static String machine = 'machine';
+  static String other = 'other';
+}
+
+List<Exercise> defaultExercises = [
   Exercise(
-    id: '1',
-    name: 'Overhead press',
-    note: 'Push head forwards once bar is up.',
-    userMade: false,
-    muscleGroupID: '8',
-    exerciseType: ExerciseType.strength,
+    name: 'Barbell Overhead Press',
+    exerciseCategory: ExerciseCategory.upperPush,
+    limbInvolvement: LimbInvolvement.bilateral,
+    equipment: Equipment.barbell,
+    bodyParts: ['Showers', 'triceps'],
+    tags: ['Strength'],
   ),
   Exercise(
-    id: '2',
-    name: 'Peck Fly',
-    note: 'Keep arms straight',
-    userMade: false,
-    muscleGroupID: '4',
-    exerciseType: ExerciseType.strength,
+    name: 'Pec Flys',
+    exerciseCategory: ExerciseCategory.upperPush,
+    limbInvolvement: LimbInvolvement.unilateral,
+    equipment: Equipment.dumbbell,
+    bodyParts: ['Chest'],
+    tags: ['Strength'],
   ),
 ];

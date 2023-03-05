@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/models/exercise_model.dart';
-import 'package:squatva/models/muscle_group_model.dart';
+import 'package:squatva/models/models.dart';
 import 'package:squatva/notifiers/exercise_notifier.dart';
+import 'package:squatva/services/services.dart';
 
 class CreateExerciseDialog extends StatefulWidget {
   const CreateExerciseDialog({super.key});
@@ -15,43 +15,6 @@ class _CreateExerciseDialogState extends State<CreateExerciseDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameTextEditingController = TextEditingController();
   final TextEditingController _notesTextEditingController = TextEditingController();
-  MuscleGroup? muscleGroupSelected;
-
-  Widget _buildDropDownFormField() {
-    return DropdownButtonFormField<MuscleGroup>(
-      decoration: InputDecoration(contentPadding: EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 10)),
-      isDense: false,
-      value: muscleGroupSelected,
-      items: muscleGroups
-          .map(
-            (muscleGroup) => DropdownMenuItem(
-              value: muscleGroup,
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image.asset(muscleGroup.imagePath),
-                  ),
-                  Text(muscleGroup.name),
-                ],
-              ),
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        setState(() {
-          muscleGroupSelected = value;
-        });
-      },
-      hint: const Text('Choose a muscle group'),
-      validator: (value) {
-        if (value == null) {
-          return 'Required';
-        }
-      },
-    );
-  }
 
   Widget _buildNameFormField() {
     return TextFormField(
@@ -90,7 +53,6 @@ class _CreateExerciseDialogState extends State<CreateExerciseDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildNameFormField(),
-            _buildDropDownFormField(),
             _buildNotesFormField(),
           ],
         ),
@@ -102,20 +64,23 @@ class _CreateExerciseDialogState extends State<CreateExerciseDialog> {
             },
             child: Text('Cancel')),
         TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (!_formKey.currentState!.validate()) {
                 return;
               }
               _formKey.currentState!.save();
 
-              exerciseNotifier.addExercise = Exercise(
-                id: '1000',
-                name: _nameTextEditingController.text,
-                note: _notesTextEditingController.text,
-                userMade: true,
-                muscleGroupID: muscleGroupSelected!.id,
-                exerciseType: ExerciseType.strength,
-              );
+              await ExerciseService.create(context,
+                  exercise: Exercise(
+                    name: _nameTextEditingController.text,
+                    exerciseCategory: ExerciseCategory.arms,
+                    limbInvolvement: LimbInvolvement.bilateral,
+                    equipment: Equipment.barbell,
+                    bodyParts: ['Arms'],
+                    tags: ['Strength'],
+                    note: _notesTextEditingController.text,
+                    userID: AuthService.currentUserId,
+                  ));
               Navigator.pop(context);
             },
             child: Text('Create')),
