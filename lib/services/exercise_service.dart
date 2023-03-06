@@ -25,4 +25,22 @@ class ExerciseService {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
     exerciseNotifier.addUserExercises = userExerciseList;
   }
+
+  static Future updateExercise(BuildContext context, {required Exercise newExercise}) async {
+    // Re-write exercise
+    await ExerciseDatabase.update(context, exercise: newExercise);
+
+    // Update notifier
+    ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
+    exerciseNotifier.replaceExercise(newExercise);
+  }
+
+  static Future deleteExcercise(BuildContext context, {required Exercise exercise}) async {
+    // Delete from exercise database
+    await ExerciseDatabase.delete(context, exercise: exercise);
+
+    // Remove from notifier
+    ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
+    exerciseNotifier.removeExercise(exercise);
+  }
 }

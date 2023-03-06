@@ -49,7 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 trailing: exercise.userID != null ? const Icon(Icons.check) : const SizedBox(),
                 onTap: () => showDialog(
                   context: context,
-                  builder: (context) => ExerciseDetailsPopUp(exercise: exercise),
+                  builder: (context) => EditExercisePopUp(exercise: exercise),
+                ),
+                onLongPress: () => showDialog(
+                  context: context,
+                  builder: (context) => DeleteExercisePopUp(exercise: exercise),
                 ),
               );
             }).toList(),

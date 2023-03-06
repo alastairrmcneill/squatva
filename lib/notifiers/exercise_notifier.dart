@@ -15,4 +15,20 @@ class ExerciseNotifier extends ChangeNotifier {
     _exerciseList = defaultExercises + userExercises;
     notifyListeners();
   }
+
+  replaceExercise(Exercise exercise) {
+    int index = exerciseList.indexWhere((element) => element.id == exercise.id);
+    if (index != -1) {
+      _exerciseList[index] = exercise;
+      notifyListeners();
+    }
+  }
+
+  removeExercise(Exercise exercise) {
+    int index = exerciseList.indexWhere((element) => element.id == exercise.id);
+    if (index != -1) {
+      _exerciseList.removeAt(index);
+      notifyListeners();
+    }
+  }
 }

@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:squatva/models/models.dart';
 import 'package:squatva/services/exercise_service.dart';
 
-class EditExercisePopUp extends StatelessWidget {
+class DeleteExercisePopUp extends StatelessWidget {
   final Exercise exercise;
-  const EditExercisePopUp({super.key, required this.exercise});
+  const DeleteExercisePopUp({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController(text: exercise.name);
     return AlertDialog(
-      title: TextFormField(
-        controller: textEditingController,
-      ),
+      title: Text('Are you sure you want to delete ${exercise.name}?'),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -20,12 +17,10 @@ class EditExercisePopUp extends StatelessWidget {
         ),
         TextButton(
           onPressed: () async {
-            Exercise newExercise = exercise.copy(name: textEditingController.text);
-
-            await ExerciseService.updateExercise(context, newExercise: newExercise);
+            await ExerciseService.deleteExcercise(context, exercise: exercise);
             Navigator.of(context).pop();
           },
-          child: Text('Update'),
+          child: Text('Delete'),
         ),
       ],
     );

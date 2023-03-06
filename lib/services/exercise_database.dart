@@ -30,6 +30,16 @@ class ExerciseDatabase {
   }
 
   static Future read(BuildContext context) async {}
-  static Future update(BuildContext context) async {}
-  static Future delete(BuildContext context) async {}
+
+  static Future update(BuildContext context, {required Exercise exercise}) async {
+    DocumentReference _docRef = _collectionRef.doc(exercise.id);
+
+    await _docRef.update(exercise.toJSON());
+  }
+
+  static Future delete(BuildContext context, {required Exercise exercise}) async {
+    DocumentReference _docRef = _collectionRef.doc(exercise.id);
+
+    await _docRef.delete();
+  }
 }
