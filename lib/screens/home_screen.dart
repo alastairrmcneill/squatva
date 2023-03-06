@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/models/models.dart';
 import 'package:squatva/notifiers/notifiers.dart';
+import 'package:squatva/screens/create_exercise_screen.dart';
+import 'package:squatva/screens/exercise_detail_screen.dart';
 import 'package:squatva/services/services.dart';
 import 'package:squatva/widgets/widgets.dart';
 
@@ -47,23 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
               return ListTile(
                 title: Text(exercise.name),
                 trailing: exercise.userID != null ? const Icon(Icons.check) : const SizedBox(),
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => EditExercisePopUp(exercise: exercise),
-                ),
-                onLongPress: () => showDialog(
-                  context: context,
-                  builder: (context) => DeleteExercisePopUp(exercise: exercise),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ExerciseDetailScreen(exercise: exercise),
+                  ),
                 ),
               );
             }).toList(),
             ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => const CreateExerciseDialog(),
-                );
-              },
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => CreateExerciseScreen()),
+              ),
               child: const Text('Create'),
             )
           ],

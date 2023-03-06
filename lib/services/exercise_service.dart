@@ -6,8 +6,11 @@ import 'package:squatva/services/services.dart';
 
 class ExerciseService {
   static Future create(BuildContext context, {required Exercise exercise}) async {
+    // Link to user
+    Exercise newExercise = exercise.copy(userID: AuthService.currentUserId);
+
     // Write to database
-    await ExerciseDatabase.create(context, exercise: exercise);
+    await ExerciseDatabase.create(context, exercise: newExercise);
 
     // Read from database
     List<Exercise> userExerciseList = await ExerciseDatabase.readMyExercises(context);

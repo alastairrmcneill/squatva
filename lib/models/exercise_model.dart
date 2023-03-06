@@ -1,13 +1,13 @@
 class Exercise {
   final String? id;
   final String name;
+  final String equipment;
   final String exerciseCategory;
   final String limbInvolvement;
-  final String equipment;
   final List<String> bodyParts;
   final List<String> tags;
-  final String? link;
-  final String? note;
+  final String link;
+  final String note;
   final String? userID;
 
   Exercise({
@@ -18,8 +18,8 @@ class Exercise {
     required this.equipment,
     required this.bodyParts,
     required this.tags,
-    this.link,
-    this.note,
+    required this.link,
+    required this.note,
     this.userID,
   });
 
@@ -53,8 +53,8 @@ class Exercise {
       equipment: json[ExerciseFields.equipment] as String,
       bodyParts: listBodyParts,
       tags: listTags,
-      link: json[ExerciseFields.link] as String?,
-      note: json[ExerciseFields.note] as String?,
+      link: json[ExerciseFields.link] as String,
+      note: json[ExerciseFields.note] as String,
       userID: json[ExerciseFields.userID] as String?,
     );
   }
@@ -79,6 +79,7 @@ class Exercise {
       equipment: equipment ?? this.equipment,
       bodyParts: bodyParts ?? this.bodyParts,
       tags: tags ?? this.tags,
+      link: link ?? this.link,
       note: note ?? this.note,
       userID: userID ?? this.userID,
     );
@@ -106,11 +107,26 @@ class ExerciseCategory {
   static String arms = 'arms';
   static String trunk = 'trunk';
   static String other = 'other';
+
+  static List<String> all = [
+    lowerPull,
+    upperPull,
+    lowerPush,
+    upperPush,
+    arms,
+    trunk,
+    other,
+  ];
 }
 
 class LimbInvolvement {
   static String bilateral = 'bilateral';
   static String unilateral = 'unilateral';
+
+  static List<String> all = [
+    unilateral,
+    bilateral,
+  ];
 }
 
 class Equipment {
@@ -120,6 +136,15 @@ class Equipment {
   static String resistanceBand = 'resistanceBand';
   static String machine = 'machine';
   static String other = 'other';
+
+  static List<String> all = [
+    bodyweight,
+    barbell,
+    dumbbell,
+    resistanceBand,
+    machine,
+    other,
+  ];
 }
 
 List<Exercise> defaultExercises = [
@@ -128,8 +153,10 @@ List<Exercise> defaultExercises = [
     exerciseCategory: ExerciseCategory.upperPush,
     limbInvolvement: LimbInvolvement.bilateral,
     equipment: Equipment.barbell,
-    bodyParts: ['Showers', 'triceps'],
+    bodyParts: ['Shoulders', 'triceps'],
     tags: ['Strength'],
+    link: '',
+    note: '',
   ),
   Exercise(
     name: 'Pec Flys',
@@ -138,5 +165,7 @@ List<Exercise> defaultExercises = [
     equipment: Equipment.dumbbell,
     bodyParts: ['Chest'],
     tags: ['Strength'],
+    link: '',
+    note: '',
   ),
 ];

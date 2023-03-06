@@ -19,6 +19,7 @@ class DeleteExercisePopUp extends StatelessWidget {
           onPressed: () async {
             await ExerciseService.deleteExcercise(context, exercise: exercise);
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
           },
           child: Text('Delete'),
         ),
