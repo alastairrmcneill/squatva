@@ -5,6 +5,8 @@ import 'package:squatva/notifiers/notifiers.dart';
 import 'package:squatva/screens/create_exercise_screen.dart';
 import 'package:squatva/screens/exercise_detail_screen.dart';
 import 'package:squatva/services/services.dart';
+import 'package:squatva/widgets/filter_option_1.dart';
+import 'package:squatva/widgets/filter_option_2.dart';
 import 'package:squatva/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,25 +47,28 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: ListView(
           children: [
-            ...exerciseNotifier.exerciseList.map((Exercise exercise) {
-              return ListTile(
-                title: Text(exercise.name),
-                trailing: exercise.userID != null ? const Icon(Icons.check) : const SizedBox(),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ExerciseDetailScreen(exercise: exercise),
-                  ),
-                ),
-              );
-            }).toList(),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => CreateExerciseScreen()),
-              ),
-              child: const Text('Create'),
-            )
+            Filter1(),
+            const SizedBox(height: 20),
+            Filter2(),
+            // ...exerciseNotifier.exerciseList.map((Exercise exercise) {
+            //   return ListTile(
+            //     title: Text(exercise.name),
+            //     trailing: exercise.userID != null ? const Icon(Icons.check) : const SizedBox(),
+            //     onTap: () => Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (_) => ExerciseDetailScreen(exercise: exercise),
+            //       ),
+            //     ),
+            //   );
+            // }).toList(),
+            // ElevatedButton(
+            //   onPressed: () => Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (_) => CreateExerciseScreen()),
+            //   ),
+            //   child: const Text('Create'),
+            // )
           ],
         ),
       ),
