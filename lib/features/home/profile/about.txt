@@ -1,0 +1,2 @@
+This is where we will be able to add in things like stats, followers
+workouts completed, acttivity summary, settings etc. 

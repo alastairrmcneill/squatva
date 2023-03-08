@@ -1,0 +1,6 @@
+In here we want to build a screen where coaches can create workouts,
+share them without people and see how their athletes are progressing with those workouts.
+
+This won't allow you to log workouts, its all for monitoring the progress of others 
+
+(Maybe not include in MVP)
