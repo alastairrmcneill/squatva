@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/screens/screens.dart';
+import 'package:squatva/features/auth/screens/screens.dart';
+import 'package:squatva/features/home/general/screens/screens.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});

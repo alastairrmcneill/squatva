@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/notifiers/notifiers.dart';
+import 'package:squatva/general/notifiers/notifiers.dart';
+import 'package:squatva/general/services/services.dart';
 import 'package:squatva/support/theme.dart';
 import 'package:squatva/support/wrapper.dart';
-
-import 'services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
