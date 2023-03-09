@@ -15,7 +15,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
   final TextEditingController _nameTextEditingController = TextEditingController();
   final TextEditingController _linkTextEditingController = TextEditingController();
   final TextEditingController _noteTextEditingController = TextEditingController();
-  final TextEditingController _tagsTextEditingController = TextEditingController();
+  final TextEditingController _musclesUsedTextEditingController = TextEditingController();
   final List<String> equipmentList = Equipment.all;
   String? selectedEquipment;
   final List<String> categoryList = ExerciseCategory.all;
@@ -36,7 +36,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
       selectedCategory = exercise.exerciseCategory == "" ? null : exercise.exerciseCategory;
       selectedLimb = exercise.limbInvolvement == "" ? null : exercise.limbInvolvement;
 
-      if (exercise.tags.isNotEmpty) _tagsTextEditingController.text = exercise.tags.join(", ");
+      if (exercise.musclesUsed.isNotEmpty) _musclesUsedTextEditingController.text = exercise.musclesUsed.join(", ");
 
       if (exercise.link.isNotEmpty) _linkTextEditingController.text = exercise.link;
       if (exercise.note.isNotEmpty) _noteTextEditingController.text = exercise.note;
@@ -85,6 +85,17 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
     );
   }
 
+  Widget _buildMusclesUsedFormField() {
+    return TextFormField(
+      controller: _musclesUsedTextEditingController,
+      maxLines: 1,
+      decoration: const InputDecoration(hintText: 'Muscles used (separate by ",")'),
+      onSaved: (value) {
+        _musclesUsedTextEditingController.text = value ?? '';
+      },
+    );
+  }
+
   Widget _buildAdvancedButton() {
     return GestureDetector(
       onTap: () {
@@ -106,7 +117,6 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
       children: [
         _buildCategoryDropdown(),
         _buildLimbDropdown(),
-        _buildTagsFormField(),
         _buildLinkFormField(),
         _buildNoteFormField(),
       ],
@@ -174,17 +184,6 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
     );
   }
 
-  Widget _buildTagsFormField() {
-    return TextFormField(
-      controller: _tagsTextEditingController,
-      maxLines: 1,
-      decoration: const InputDecoration(hintText: 'Tags (separate by , )'),
-      onSaved: (value) {
-        _tagsTextEditingController.text = value ?? '';
-      },
-    );
-  }
-
   _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -194,11 +193,10 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
     if (widget.exercise == null) {
       Exercise exercise = Exercise(
         name: _nameTextEditingController.text.trim(),
+        equipment: selectedEquipment ?? Equipment.other,
+        musclesUsed: _musclesUsedTextEditingController.text.trim().split(','),
         exerciseCategory: selectedCategory ?? ExerciseCategory.other,
         limbInvolvement: selectedLimb ?? LimbInvolvement.bilateral,
-        equipment: selectedEquipment ?? Equipment.other,
-        bodyParts: [],
-        tags: _tagsTextEditingController.text.trim().split(','),
         link: _linkTextEditingController.text.trim(),
         note: _noteTextEditingController.text.trim(),
       );
@@ -206,11 +204,10 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
     } else {
       Exercise newExercise = widget.exercise!.copy(
         name: _nameTextEditingController.text.trim(),
+        equipment: selectedEquipment ?? Equipment.other,
+        musclesUsed: _musclesUsedTextEditingController.text.trim().split(','),
         exerciseCategory: selectedCategory ?? ExerciseCategory.other,
         limbInvolvement: selectedLimb ?? LimbInvolvement.bilateral,
-        equipment: selectedEquipment ?? Equipment.other,
-        bodyParts: [],
-        tags: _tagsTextEditingController.text.trim().split(','),
         link: _linkTextEditingController.text.trim(),
         note: _noteTextEditingController.text.trim(),
       );
@@ -244,6 +241,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
             children: [
               _buildNameFormField(),
               _buildEquipmentDropdown(),
+              _buildMusclesUsedFormField(),
               _buildAdvancedButton(),
               expanded ? _buildAdvancedFormSection() : const SizedBox(),
             ],
