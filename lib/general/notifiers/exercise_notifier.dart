@@ -44,10 +44,10 @@ class ExerciseNotifier extends ChangeNotifier {
     filter();
   }
 
-  setFilterTags({required List<String> equipmentTags, required List<String> categoryTags, required List<String> limbTags}) {
-    _filterEquipmentTags = equipmentTags;
-    _filterCategoryTags = categoryTags;
-    _filterLimbTags = limbTags;
+  setFilterTags({required List<String>? equipmentTags, required List<String>? categoryTags, required List<String>? limbTags}) {
+    if (equipmentTags != null) _filterEquipmentTags = equipmentTags;
+    if (categoryTags != null) _filterCategoryTags = categoryTags;
+    if (limbTags != null) _filterLimbTags = limbTags;
     filter();
   }
 
