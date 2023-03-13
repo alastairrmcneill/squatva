@@ -39,6 +39,10 @@ class ExerciseNotifier extends ChangeNotifier {
     }
   }
 
+  Exercise exerciseFromId(String exerciseId) {
+    return _exerciseList.firstWhere((element) => element.id == exerciseId);
+  }
+
   setFilterString(String filterString) {
     _filterString = filterString;
     filter();

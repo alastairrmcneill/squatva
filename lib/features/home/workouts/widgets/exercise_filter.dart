@@ -4,14 +4,14 @@ import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
 
-class Filter1 extends StatefulWidget {
-  const Filter1({super.key});
+class ExerciseFilter extends StatefulWidget {
+  const ExerciseFilter({super.key});
 
   @override
-  State<Filter1> createState() => _Filter1State();
+  State<ExerciseFilter> createState() => _Filter1State();
 }
 
-class _Filter1State extends State<Filter1> {
+class _Filter1State extends State<ExerciseFilter> {
   final TextEditingController textEditingController = TextEditingController();
   bool showAdvanced = false;
 

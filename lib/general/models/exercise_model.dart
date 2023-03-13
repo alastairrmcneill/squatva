@@ -139,6 +139,7 @@ class Equipment {
 
 List<Exercise> defaultExercises = [
   Exercise(
+    id: '1',
     name: 'Barbell Overhead Press',
     equipment: Equipment.barbell,
     musclesUsed: ['Shoulders', 'Triceps'],
@@ -148,6 +149,7 @@ List<Exercise> defaultExercises = [
     note: '',
   ),
   Exercise(
+    id: '2',
     name: 'Pec Flys',
     equipment: Equipment.dumbbell,
     musclesUsed: ['Chest'],
