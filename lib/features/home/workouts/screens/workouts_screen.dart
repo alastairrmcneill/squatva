@@ -8,34 +8,34 @@ import 'package:squatva/general/notifiers/notifiers.dart';
 class WorkoutsScreen extends StatelessWidget {
   const WorkoutsScreen({super.key});
 
-  // Widget _buildList(BuildContext context, WorkoutTemplateNotifier workoutTemplateNotifier) {
-  //   return Column(
-  //     children: workoutTemplateNotifier.workoutTemplates
-  //         .map(
-  //           (WorkoutTemplate workout) => ListTile(
-  //             title: Text(workout.name),
-  //             onTap: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (_) => const WorkoutDetailScreen(),
-  //               ),
-  //             ),
-  //           ),
-  //         )
-  //         .toList(),
-  //   );
-  // }
+  Widget _buildList(BuildContext context, WorkoutTemplateNotifier workoutTemplateNotifier) {
+    return Column(
+      children: workoutTemplateNotifier.workoutTemplateList
+          .map(
+            (WorkoutTemplate workout) => ListTile(
+              title: Text(workout.name),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const WorkoutDetailScreen(),
+                ),
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context);
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // workoutTemplateNotifier.workoutTemplates.isNotEmpty ? _buildList(context, workoutTemplateNotifier) :
-            Text('No workout templates found'),
+            workoutTemplateNotifier.workoutTemplateList.isNotEmpty ? _buildList(context, workoutTemplateNotifier) : Text('No workout templates found'),
             ElevatedButton(
               onPressed: () => Navigator.push(
                 context,

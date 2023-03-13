@@ -31,7 +31,17 @@ class ExerciseSelectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CreateExerciseScreen())),
+            child: Text(
+              'Create',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

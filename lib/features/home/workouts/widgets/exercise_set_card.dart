@@ -1,15 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:squatva/features/home/workouts/services/workout_template_builder_notifier.dart';
 
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
 
-class WorkoutExerciseTile extends StatelessWidget {
+class ExerciseSetCard extends StatelessWidget {
   final String exerciseIndex;
   final Map exerciseSet;
-  const WorkoutExerciseTile({
+  const ExerciseSetCard({
     Key? key,
     required this.exerciseIndex,
     required this.exerciseSet,
@@ -26,26 +26,22 @@ class WorkoutExerciseTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: Colors.grey[200],
       ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       width: double.infinity,
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(flex: 1, child: Text(exercise.name)),
               PopupMenuButton(
-                icon: Icon(Icons.more_vert_rounded),
+                icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (value) async {
-                  if (value == WorkoutExerciseTileMenuItems.item1) {
-                    //
-                  } else if (value == WorkoutExerciseTileMenuItems.item2) {
+                  if (value == WorkoutExerciseTileMenuItems.item2) {
                     workoutTemplateBuilderNotifier.removeExercise(exerciseIndex);
                   }
                 },
                 itemBuilder: (context) => const [
-                  PopupMenuItem(
-                    value: WorkoutExerciseTileMenuItems.item1,
-                    child: Text('Add Tempo'),
-                  ),
                   PopupMenuItem(
                     value: WorkoutExerciseTileMenuItems.item2,
                     child: Text('Remove Execise'),
@@ -79,6 +75,10 @@ class WorkoutExerciseTile extends StatelessWidget {
               weight: weight,
             );
           }).toList(),
+          const Divider(
+            indent: 5,
+            endIndent: 5,
+          ),
           TextButton(
               onPressed: () {
                 workoutTemplateBuilderNotifier.addSetToExercise(exerciseIndex);
@@ -91,6 +91,5 @@ class WorkoutExerciseTile extends StatelessWidget {
 }
 
 enum WorkoutExerciseTileMenuItems {
-  item1,
   item2;
 }
