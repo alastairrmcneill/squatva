@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 1;
+  int currentIndex = 2;
   List<Widget> screens = const [
     SocialScreen(),
     WorkoutsScreen(),
@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await UserDatabase.readCurrentUser(context);
     await ExerciseService.loadUserExercises(context);
     await WorkoutService.loadUserWorkoutTemplates(context);
+    await WorkoutService.loadUserWorkouts(context);
   }
 
   @override

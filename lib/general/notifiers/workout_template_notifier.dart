@@ -10,4 +10,12 @@ class WorkoutTemplateNotifier extends ChangeNotifier {
     _workoutTemplateList = userWorkoutTemplates;
     notifyListeners();
   }
+
+  removeWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+    int index = _workoutTemplateList.indexWhere((element) => element.uid == workoutTemplate.uid);
+    if (index != -1) {
+      _workoutTemplateList.removeAt(index);
+      notifyListeners();
+    }
+  }
 }

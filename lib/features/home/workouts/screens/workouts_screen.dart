@@ -12,12 +12,12 @@ class WorkoutsScreen extends StatelessWidget {
     return Column(
       children: workoutTemplateNotifier.workoutTemplateList
           .map(
-            (WorkoutTemplate workout) => ListTile(
-              title: Text(workout.name),
+            (WorkoutTemplate workoutTemplate) => ListTile(
+              title: Text(workoutTemplate.name),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const WorkoutDetailScreen(),
+                  builder: (_) => WorkoutTemplateDetailScreen(workoutTemplate: workoutTemplate),
                 ),
               ),
             ),
@@ -40,7 +40,7 @@ class WorkoutsScreen extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => CreateWorkoutScreen(),
+                  builder: (_) => const CreateWorkoutTemplateScreen(),
                 ),
               ),
               child: Text('Create workout template'),

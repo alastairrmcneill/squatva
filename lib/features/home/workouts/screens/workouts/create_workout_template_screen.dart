@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:squatva/features/home/workouts/screens/screens.dart';
 import 'package:squatva/features/home/workouts/services/workout_template_builder_notifier.dart';
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
@@ -8,21 +10,32 @@ import 'package:squatva/general/notifiers/notifiers.dart';
 import 'package:squatva/general/services/services.dart';
 import 'package:squatva/general/services/workout_service.dart';
 
-class CreateWorkoutScreen extends StatefulWidget {
-  const CreateWorkoutScreen({super.key});
+class CreateWorkoutTemplateScreen extends StatefulWidget {
+  final WorkoutTemplate? workoutTemplate;
+  const CreateWorkoutTemplateScreen({
+    Key? key,
+    this.workoutTemplate,
+  }) : super(key: key);
 
   @override
-  State<CreateWorkoutScreen> createState() => _CreateWorkoutScreenState();
+  State<CreateWorkoutTemplateScreen> createState() => _CreateWorkoutScreenState();
 }
 
-class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
+class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameTextEditingController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context, listen: false);
     workoutTemplateBuilderNotifier.reset();
+
+    if (widget.workoutTemplate != null) {
+      workoutTemplateBuilderNotifier.name = widget.workoutTemplate!.name;
+      workoutTemplateBuilderNotifier.exerciseSets = widget.workoutTemplate!.exerciseSets;
+      _nameTextEditingController.text = widget.workoutTemplate!.name;
+    }
   }
 
   Widget _buildExerciseList(WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier) {
@@ -60,7 +73,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New workout template'),
+        title: Text(widget.workoutTemplate == null ? 'Create template' : 'Edit template'),
         actions: [
           TextButton(
             onPressed: () async {
@@ -86,6 +99,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: _nameTextEditingController,
                           decoration: const InputDecoration(
                             hintText: 'Workout name',
                           ),
