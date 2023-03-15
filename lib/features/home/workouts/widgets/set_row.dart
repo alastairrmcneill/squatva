@@ -38,6 +38,7 @@ class SetRow extends StatelessWidget {
               child: TextField(
                 controller: repsContorller,
                 textAlign: TextAlign.center,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(
                   hintText: '-',
                   isDense: true,
@@ -63,6 +64,7 @@ class SetRow extends StatelessWidget {
               child: TextField(
                 controller: weightController,
                 textAlign: TextAlign.center,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(
                   hintText: '-',
                   isDense: true,

@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +26,7 @@ class CreateWorkoutTemplateScreen extends StatefulWidget {
 class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameTextEditingController = TextEditingController();
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -75,6 +78,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
   @override
   Widget build(BuildContext context) {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context);
+    Timer(Duration(milliseconds: 10), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.workoutTemplate == null ? 'Create template' : 'Edit template'),
@@ -100,6 +104,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
                 child: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
+                    controller: scrollController,
                     child: Column(
                       children: [
                         TextFormField(

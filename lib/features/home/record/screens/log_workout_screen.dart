@@ -1,4 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/record/services/services.dart';
@@ -20,6 +23,8 @@ class LogWorkoutScreen extends StatefulWidget {
 }
 
 class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +54,7 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context);
+    Timer(Duration(milliseconds: 10), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -72,6 +78,7 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
               Expanded(
                 flex: 1,
                 child: SingleChildScrollView(
+                  controller: scrollController,
                   child: Column(
                     children: [
                       Row(
