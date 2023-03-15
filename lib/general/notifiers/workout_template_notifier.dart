@@ -26,4 +26,8 @@ class WorkoutTemplateNotifier extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  reset() {
+    _workoutTemplateList = [];
+  }
 }

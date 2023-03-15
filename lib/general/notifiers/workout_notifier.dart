@@ -10,4 +10,8 @@ class WorkoutNotifier extends ChangeNotifier {
     _workoutList = userWorkout;
     notifyListeners();
   }
+
+  reset() {
+    _workoutList = [];
+  }
 }

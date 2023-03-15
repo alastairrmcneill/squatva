@@ -151,8 +151,13 @@ class AuthService {
   // Sign out
   static Future signOut(BuildContext context) async {
     try {
+      WorkoutNotifier workoutNotifier = Provider.of<WorkoutNotifier>(context, listen: false);
+      WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context, listen: false);
       UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      workoutNotifier.reset();
+      workoutTemplateNotifier.reset();
       userNotifier.setCurrentUser = null;
+
       if (_googleSignIn.currentUser != null) {
         await _googleSignIn.disconnect();
       }
