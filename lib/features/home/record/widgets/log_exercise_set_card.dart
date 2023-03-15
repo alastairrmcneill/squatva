@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/record/services/services.dart';
 import 'package:squatva/features/home/record/widgets/widgets.dart';
+import 'package:squatva/features/home/workouts/screens/screens.dart';
 
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
@@ -34,7 +35,22 @@ class LogExerciseSetCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(flex: 1, child: Text(exercise.name)),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ExerciseDetailScreen(exercise: exercise),
+                        ),
+                      ),
+                      child: Text(exercise.name),
+                    ),
+                  ],
+                ),
+              ),
               PopupMenuButton(
                 icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (value) async {
