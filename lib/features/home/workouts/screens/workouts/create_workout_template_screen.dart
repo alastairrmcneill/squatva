@@ -64,7 +64,11 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
     _formKey.currentState!.save();
     // TODO check the exercises have sets
 
-    await WorkoutService.createTemplate(context);
+    if (widget.workoutTemplate == null) {
+      await WorkoutService.createTemplate(context);
+    } else {
+      await WorkoutService.updateWorkoutTemplate(context, uid: widget.workoutTemplate!.uid);
+    }
     Navigator.pop(context);
   }
 

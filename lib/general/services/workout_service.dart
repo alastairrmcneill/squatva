@@ -55,6 +55,22 @@ class WorkoutService {
     workoutNotifier.addUserWorkouts = workoutList;
   }
 
+  static Future updateWorkoutTemplate(BuildContext context, {required String uid}) async {
+    WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context, listen: false);
+    // Link to user
+    String name = workoutTemplateBuilderNotifier.name;
+    Map exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
+
+    WorkoutTemplate newWorkoutTemplate = WorkoutTemplate(uid: uid, name: name, userID: AuthService.currentUserId!, exerciseSets: exerciseSets);
+
+    // Re-write exercise
+    await WorkoutTemplateDatabase.update(context, workoutTemplate: newWorkoutTemplate);
+
+    // Update notifier
+    WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context, listen: false);
+    workoutTemplateNotifier.replaceWorkoutTemplate(newWorkoutTemplate);
+  }
+
   static Future deleteWorkoutTemplate(BuildContext context, {required WorkoutTemplate workoutTemplate}) async {
     // Delete from exercise database
     await WorkoutTemplateDatabase.delete(context, workoutTemplate: workoutTemplate);

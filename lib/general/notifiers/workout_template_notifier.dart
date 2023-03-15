@@ -11,6 +11,14 @@ class WorkoutTemplateNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  replaceWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+    int index = _workoutTemplateList.indexWhere((element) => element.uid == workoutTemplate.uid);
+    if (index != -1) {
+      _workoutTemplateList[index] = workoutTemplate;
+      notifyListeners();
+    }
+  }
+
   removeWorkoutTemplate(WorkoutTemplate workoutTemplate) {
     int index = _workoutTemplateList.indexWhere((element) => element.uid == workoutTemplate.uid);
     if (index != -1) {
