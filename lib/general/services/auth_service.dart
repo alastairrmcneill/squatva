@@ -170,7 +170,11 @@ class AuthService {
   // Delete account
   static Future delete(BuildContext context) async {
     try {
+      WorkoutNotifier workoutNotifier = Provider.of<WorkoutNotifier>(context, listen: false);
+      WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context, listen: false);
       UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      workoutNotifier.reset();
+      workoutTemplateNotifier.reset();
       userNotifier.setCurrentUser = null;
       await UserDatabase.deleteUserWithUID(context, uid: _auth.currentUser!.uid);
       await _auth.currentUser?.delete();
