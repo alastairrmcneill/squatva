@@ -77,28 +77,46 @@ class _Filter1State extends State<ExerciseFilter> {
                       const SizedBox(height: 5),
                       Container(
                         height: 50,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            FilterExerciseButton(
-                              title: 'Equipment',
-                              filterOptions: Equipment.all,
-                              preSelectedTags: exerciseNotifier.filterEquipmentTags,
-                              selected: exerciseNotifier.filterEquipmentTags.isNotEmpty,
-                            ),
-                            FilterExerciseButton(
-                              title: 'Category',
-                              filterOptions: ExerciseCategory.all,
-                              preSelectedTags: exerciseNotifier.filterCategoryTags,
-                              selected: exerciseNotifier.filterCategoryTags.isNotEmpty,
-                            ),
-                            FilterExerciseButton(
-                              title: 'Limb Involvement',
-                              filterOptions: LimbInvolvement.all,
-                              preSelectedTags: exerciseNotifier.filterLimbTags,
-                              selected: exerciseNotifier.filterLimbTags.isNotEmpty,
-                            ),
-                          ],
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              FilterExerciseButton(
+                                title: 'Equipment',
+                                filterOptions: Equipment.all,
+                                preSelectedTags: exerciseNotifier.filterEquipmentTags,
+                                selected: exerciseNotifier.filterEquipmentTags.isNotEmpty,
+                              ),
+                              const SizedBox(width: 5),
+                              FilterExerciseButton(
+                                title: 'Category',
+                                filterOptions: ExerciseCategory.all,
+                                preSelectedTags: exerciseNotifier.filterCategoryTags,
+                                selected: exerciseNotifier.filterCategoryTags.isNotEmpty,
+                              ),
+                              const SizedBox(width: 5),
+                              FilterExerciseButton(
+                                title: 'Limb Involvement',
+                                filterOptions: LimbInvolvement.all,
+                                preSelectedTags: exerciseNotifier.filterLimbTags,
+                                selected: exerciseNotifier.filterLimbTags.isNotEmpty,
+                              ),
+                              const SizedBox(width: 5),
+                              ElevatedButton(
+                                onPressed: () {
+                                  exerciseNotifier.setFilterTags(equipmentTags: [], categoryTags: [], limbTags: []);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[400]),
+                                  elevation: MaterialStateProperty.all<double?>(0),
+                                  side: MaterialStateProperty.all<BorderSide?>(
+                                    BorderSide(color: const Color(0xFF616161), width: 0.5),
+                                  ),
+                                ),
+                                child: Text('Clear'),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
