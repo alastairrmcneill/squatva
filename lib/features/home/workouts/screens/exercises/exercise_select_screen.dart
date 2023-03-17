@@ -42,12 +42,14 @@ class ExerciseSelectScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const ExerciseFilter(),
-          exerciseNotifier.filteredExerciseList.isNotEmpty ? _buildList(context, exerciseNotifier) : Text('No exercises found'),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const ExerciseFilter(),
+            exerciseNotifier.filteredExerciseList.isNotEmpty ? _buildList(context, exerciseNotifier) : Text('No exercises found'),
+          ],
+        ),
       ),
     );
   }
