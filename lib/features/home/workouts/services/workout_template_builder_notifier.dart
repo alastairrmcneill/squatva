@@ -3,12 +3,25 @@ import 'package:squatva/general/models/models.dart';
 
 class WorkoutTemplateBuilderNotifier extends ChangeNotifier {
   String name = '';
+  String startingName = '';
   Map exerciseSets = {};
   int _exerciseCount = 0;
+  WorkoutTemplate? _startingPoint;
+
+  WorkoutTemplate? get startingPoint => _startingPoint;
 
   reset() {
     name = '';
     exerciseSets = {};
+  }
+
+  set setStartingPoint(WorkoutTemplate workoutTemplate) {
+    _startingPoint = WorkoutTemplate(
+      uid: workoutTemplate.uid,
+      name: workoutTemplate.name,
+      userID: workoutTemplate.userID,
+      exerciseSets: Map.from(workoutTemplate.exerciseSets),
+    );
   }
 
   addNewExercise(String exerciseId) {
@@ -41,6 +54,12 @@ class WorkoutTemplateBuilderNotifier extends ChangeNotifier {
       'reps': reps,
       'weight': weight,
     });
+    notifyListeners();
+  }
+
+  remoteSetFromExercise(String exerciseIndex, int setNumber) {
+    (exerciseSets[exerciseIndex]['sets'] as List).removeAt(setNumber);
+    print(exerciseSets[exerciseIndex]['sets']);
     notifyListeners();
   }
 }

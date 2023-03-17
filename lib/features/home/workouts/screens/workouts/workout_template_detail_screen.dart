@@ -1,19 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/screens/screens.dart';
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 
 import 'package:squatva/general/models/models.dart';
+import 'package:squatva/general/notifiers/workout_template_notifier.dart';
 
 class WorkoutTemplateDetailScreen extends StatelessWidget {
-  final WorkoutTemplate workoutTemplate;
   const WorkoutTemplateDetailScreen({
     Key? key,
-    required this.workoutTemplate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context);
+    WorkoutTemplate workoutTemplate = workoutTemplateNotifier.currentWorkoutTemplate!;
     return Scaffold(
       appBar: AppBar(
         title: Text(workoutTemplate.name),
@@ -43,6 +45,7 @@ class WorkoutTemplateDetailScreen extends StatelessWidget {
           )
         ],
       ),
+      body: Text((workoutTemplate.exerciseSets['0']['sets'] as List).length.toString()),
     );
   }
 }

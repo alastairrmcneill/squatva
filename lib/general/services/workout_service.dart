@@ -69,6 +69,7 @@ class WorkoutService {
     // Update notifier
     WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context, listen: false);
     workoutTemplateNotifier.replaceWorkoutTemplate(newWorkoutTemplate);
+    workoutTemplateNotifier.setCurrentWorkoutTemplate = newWorkoutTemplate;
   }
 
   static Future deleteWorkoutTemplate(BuildContext context, {required WorkoutTemplate workoutTemplate}) async {

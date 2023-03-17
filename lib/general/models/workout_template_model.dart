@@ -39,7 +39,7 @@ class WorkoutTemplate {
       uid: uid ?? this.uid,
       name: name ?? this.name,
       userID: userID ?? this.userID,
-      exerciseSets: exerciseSets ?? this.exerciseSets,
+      exerciseSets: exerciseSets ?? Map.from(this.exerciseSets),
     );
   }
 }

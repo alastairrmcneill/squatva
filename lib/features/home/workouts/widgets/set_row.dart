@@ -24,64 +24,83 @@ class SetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20),
-        SizedBox(width: 30, child: Center(child: Text((setNumber + 1).toString()))),
-        SizedBox(
-          width: 90,
-          height: 30,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: TextField(
-                controller: repsContorller,
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
-                  hintText: '-',
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                ),
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    int _reps = int.parse(value);
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        workoutTemplateBuilderNotifier.remoteSetFromExercise(exerciseIndex, setNumber);
+      },
+      background: Container(
+        color: Colors.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            SizedBox(width: 10),
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(width: 20),
+          SizedBox(width: 30, child: Center(child: Text((setNumber + 1).toString()))),
+          SizedBox(
+            width: 90,
+            height: 30,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextField(
+                  controller: repsContorller,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: const InputDecoration(
+                    hintText: '-',
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  ),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      int _reps = int.parse(value);
 
-                    workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['reps'] = _reps;
-                  }
-                },
+                      workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['reps'] = _reps;
+                    }
+                  },
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 90,
-          height: 30,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: TextField(
-                controller: weightController,
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
-                  hintText: '-',
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                ),
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    double _weight = double.parse(value);
+          SizedBox(
+            width: 90,
+            height: 30,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextField(
+                  controller: weightController,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: const InputDecoration(
+                    hintText: '-',
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  ),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      double _weight = double.parse(value);
 
-                    workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['weight'] = _weight;
-                  }
-                },
+                      workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['weight'] = _weight;
+                    }
+                  },
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

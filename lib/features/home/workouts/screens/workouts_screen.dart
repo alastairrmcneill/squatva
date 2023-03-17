@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/screens/screens.dart';
-import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
 
@@ -10,19 +9,19 @@ class WorkoutsScreen extends StatelessWidget {
 
   Widget _buildList(BuildContext context, WorkoutTemplateNotifier workoutTemplateNotifier) {
     return Column(
-      children: workoutTemplateNotifier.workoutTemplateList
-          .map(
-            (WorkoutTemplate workoutTemplate) => ListTile(
-              title: Text(workoutTemplate.name),
-              onTap: () => Navigator.push(
+      children: workoutTemplateNotifier.workoutTemplateList.map((WorkoutTemplate workoutTemplate) {
+        return ListTile(
+            title: Text(workoutTemplate.name),
+            onTap: () {
+              workoutTemplateNotifier.setCurrentWorkoutTemplate = workoutTemplate;
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => WorkoutTemplateDetailScreen(workoutTemplate: workoutTemplate),
+                  builder: (_) => WorkoutTemplateDetailScreen(),
                 ),
-              ),
-            ),
-          )
-          .toList(),
+              );
+            });
+      }).toList(),
     );
   }
 

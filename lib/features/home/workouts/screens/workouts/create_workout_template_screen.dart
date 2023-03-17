@@ -35,13 +35,16 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
     workoutTemplateBuilderNotifier.reset();
 
     if (widget.workoutTemplate != null) {
+      WorkoutTemplate startingPoint = widget.workoutTemplate!.copy();
       workoutTemplateBuilderNotifier.name = widget.workoutTemplate!.name;
       workoutTemplateBuilderNotifier.exerciseSets = widget.workoutTemplate!.exerciseSets;
+      workoutTemplateBuilderNotifier.setStartingPoint = startingPoint;
       _nameTextEditingController.text = widget.workoutTemplate!.name;
     }
   }
 
   Widget _buildExerciseList(WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier) {
+    print(workoutTemplateBuilderNotifier.exerciseSets);
     return Column(
       children: [
         ...workoutTemplateBuilderNotifier.exerciseSets.keys
@@ -82,6 +85,19 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.workoutTemplate == null ? 'Create template' : 'Edit template'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            if (widget.workoutTemplate == null) {
+              Navigator.pop(context);
+              return;
+            }
+            // Reset workout template to before edits
+            WorkoutService.loadUserWorkoutTemplates(context);
+            Navigator.pop(context);
+            return;
+          },
+        ),
         actions: [
           TextButton(
             onPressed: () async {
@@ -119,7 +135,6 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
                           },
                           onSaved: (value) {
                             workoutTemplateBuilderNotifier.name = value!;
-                            workoutTemplateBuilderNotifier.name = value;
                           },
                         ),
                         Row(
