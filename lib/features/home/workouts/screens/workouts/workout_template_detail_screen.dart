@@ -45,7 +45,6 @@ class WorkoutTemplateDetailScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Text((workoutTemplate.exerciseSets['0']['sets'] as List).length.toString()),
     );
   }
 }

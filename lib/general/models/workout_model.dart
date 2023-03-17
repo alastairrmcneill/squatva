@@ -1,7 +1,7 @@
 class Workout {
   String uid;
   String userID;
-  Map exerciseSets;
+  List exerciseSets;
 
   Workout({
     this.uid = '',
@@ -21,14 +21,14 @@ class Workout {
     return Workout(
       uid: json[WorkoutFields.uid] as String,
       userID: json[WorkoutFields.userID] as String,
-      exerciseSets: json[WorkoutFields.exerciseSets] as Map,
+      exerciseSets: json[WorkoutFields.exerciseSets] as List,
     );
   }
 
   Workout copy({
     String? uid,
     String? userID,
-    Map? exerciseSets,
+    List? exerciseSets,
   }) {
     return Workout(
       uid: uid ?? this.uid,

@@ -8,7 +8,7 @@ import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
 
 class ExerciseSetCard extends StatelessWidget {
-  final String exerciseIndex;
+  final int exerciseIndex;
   final Map exerciseSet;
   const ExerciseSetCard({
     Key? key,
@@ -55,11 +55,18 @@ class ExerciseSetCard extends StatelessWidget {
               PopupMenuButton(
                 icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (value) async {
+                  if (value == WorkoutExerciseTileMenuItems.item1) {
+                    showReorderBottomSheet(context, workoutTemplateBuilderNotifier);
+                  }
                   if (value == WorkoutExerciseTileMenuItems.item2) {
                     workoutTemplateBuilderNotifier.removeExercise(exerciseIndex);
                   }
                 },
                 itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: WorkoutExerciseTileMenuItems.item1,
+                    child: Text('Reorder Exercise'),
+                  ),
                   PopupMenuItem(
                     value: WorkoutExerciseTileMenuItems.item2,
                     child: Text('Remove Execise'),
@@ -109,5 +116,6 @@ class ExerciseSetCard extends StatelessWidget {
 }
 
 enum WorkoutExerciseTileMenuItems {
+  item1,
   item2;
 }

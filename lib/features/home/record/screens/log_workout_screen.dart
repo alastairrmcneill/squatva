@@ -30,23 +30,22 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
     super.initState();
 
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context, listen: false);
-    logWorkoutBuilderNotifier.exerciseSets = widget.workoutTemplate?.exerciseSets ?? {};
+    logWorkoutBuilderNotifier.exerciseSets = widget.workoutTemplate?.exerciseSets ?? [];
   }
 
   Widget _buildExerciseList(LogWorkoutBuilderNotifier logWorkoutBuilderNotifier) {
     return Column(
       children: [
-        ...logWorkoutBuilderNotifier.exerciseSets.keys
-            .map(
-              (exerciseIndex) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: LogExerciseSetCard(
-                  exerciseIndex: exerciseIndex,
-                  exerciseSet: logWorkoutBuilderNotifier.exerciseSets[exerciseIndex],
-                ),
-              ),
-            )
-            .toList(),
+        ...logWorkoutBuilderNotifier.exerciseSets.map((exerciseSet) {
+          int index = logWorkoutBuilderNotifier.exerciseSets.indexOf(exerciseSet);
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: LogExerciseSetCard(
+              exerciseIndex: index,
+              exerciseSet: exerciseSet,
+            ),
+          );
+        }).toList(),
       ],
     );
   }

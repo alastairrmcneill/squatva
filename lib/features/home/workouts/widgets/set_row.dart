@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/services/workout_template_builder_notifier.dart';
 
 class SetRow extends StatelessWidget {
-  final String exerciseIndex;
+  final int exerciseIndex;
   final int setNumber;
   final int reps;
   final double weight;

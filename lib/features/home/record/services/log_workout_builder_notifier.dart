@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class LogWorkoutBuilderNotifier extends ChangeNotifier {
-  Map exerciseSets = {};
-  int _exerciseCount = 0;
+  List exerciseSets = [];
 
   reset() {
-    exerciseSets = {};
+    exerciseSets = [];
   }
 
   addNewExercise(String exerciseId) {
-    exerciseSets[_exerciseCount.toString()] = {
+    exerciseSets.add({
       'exerciseId': exerciseId,
       'sets': [
         {
@@ -17,17 +16,16 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
           'weight': 0.0,
         }
       ],
-    };
-    _exerciseCount++;
+    });
     notifyListeners();
   }
 
-  removeExercise(String exerciseIndex) {
-    exerciseSets.remove(exerciseIndex);
+  removeExercise(int exerciseIndex) {
+    exerciseSets.removeAt(exerciseIndex);
     notifyListeners();
   }
 
-  addSetToExercise(String exerciseIndex) {
+  addSetToExercise(int exerciseIndex) {
     int reps = 0;
     double weight = 0.0;
     if (exerciseSets[exerciseIndex]['sets'].isNotEmpty) {

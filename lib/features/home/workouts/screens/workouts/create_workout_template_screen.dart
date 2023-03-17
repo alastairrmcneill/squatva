@@ -35,29 +35,26 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
     workoutTemplateBuilderNotifier.reset();
 
     if (widget.workoutTemplate != null) {
-      WorkoutTemplate startingPoint = widget.workoutTemplate!.copy();
       workoutTemplateBuilderNotifier.name = widget.workoutTemplate!.name;
       workoutTemplateBuilderNotifier.exerciseSets = widget.workoutTemplate!.exerciseSets;
-      workoutTemplateBuilderNotifier.setStartingPoint = startingPoint;
       _nameTextEditingController.text = widget.workoutTemplate!.name;
     }
   }
 
   Widget _buildExerciseList(WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier) {
-    print(workoutTemplateBuilderNotifier.exerciseSets);
     return Column(
       children: [
-        ...workoutTemplateBuilderNotifier.exerciseSets.keys
-            .map(
-              (exerciseIndex) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ExerciseSetCard(
-                  exerciseIndex: exerciseIndex,
-                  exerciseSet: workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex],
-                ),
-              ),
-            )
-            .toList(),
+        ...workoutTemplateBuilderNotifier.exerciseSets.map((exerciseSet) {
+          int index = workoutTemplateBuilderNotifier.exerciseSets.indexOf(exerciseSet);
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ExerciseSetCard(
+              exerciseIndex: index,
+              exerciseSet: exerciseSet,
+            ),
+          );
+        }).toList(),
       ],
     );
   }

@@ -3,13 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:squatva/features/home/record/services/services.dart';
 import 'package:squatva/features/home/record/widgets/widgets.dart';
 import 'package:squatva/features/home/workouts/screens/screens.dart';
-
-import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
 
 class LogExerciseSetCard extends StatelessWidget {
-  final String exerciseIndex;
+  final int exerciseIndex;
   final Map exerciseSet;
   const LogExerciseSetCard({
     Key? key,
@@ -108,5 +106,6 @@ class LogExerciseSetCard extends StatelessWidget {
 }
 
 enum WorkoutExerciseTileMenuItems {
+  item1,
   item2;
 }

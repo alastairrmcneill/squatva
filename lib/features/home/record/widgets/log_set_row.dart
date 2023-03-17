@@ -1,11 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/record/services/services.dart';
-import 'package:squatva/features/home/workouts/services/workout_template_builder_notifier.dart';
 
 class LogSetRow extends StatelessWidget {
-  final String exerciseIndex;
+  final int exerciseIndex;
   final int setNumber;
   final int reps;
   final double weight;

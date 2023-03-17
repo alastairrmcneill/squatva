@@ -12,9 +12,13 @@ class WorkoutService {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context, listen: false);
     // Link to user
     String name = workoutTemplateBuilderNotifier.name;
-    Map exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
+    List exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
 
-    WorkoutTemplate workoutTemplate = WorkoutTemplate(name: name, userID: AuthService.currentUserId!, exerciseSets: exerciseSets);
+    WorkoutTemplate workoutTemplate = WorkoutTemplate(
+      name: name,
+      userID: AuthService.currentUserId!,
+      exerciseSets: exerciseSets,
+    );
 
     // Write to database
     await WorkoutTemplateDatabase.create(context, workoutTemplate: workoutTemplate);
@@ -26,7 +30,7 @@ class WorkoutService {
   static Future logWorkout(BuildContext context) async {
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context, listen: false);
     // Link to user
-    Map exerciseSets = logWorkoutBuilderNotifier.exerciseSets;
+    List exerciseSets = logWorkoutBuilderNotifier.exerciseSets;
 
     Workout workout = Workout(userID: AuthService.currentUserId!, exerciseSets: exerciseSets);
 
@@ -59,7 +63,7 @@ class WorkoutService {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context, listen: false);
     // Link to user
     String name = workoutTemplateBuilderNotifier.name;
-    Map exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
+    List exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
 
     WorkoutTemplate newWorkoutTemplate = WorkoutTemplate(uid: uid, name: name, userID: AuthService.currentUserId!, exerciseSets: exerciseSets);
 

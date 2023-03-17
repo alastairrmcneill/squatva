@@ -2,7 +2,7 @@ class WorkoutTemplate {
   String uid;
   String name;
   String userID;
-  Map exerciseSets;
+  List exerciseSets;
 
   WorkoutTemplate({
     this.uid = '',
@@ -25,7 +25,7 @@ class WorkoutTemplate {
       uid: json[WorkoutTemplateFields.uid] as String,
       name: json[WorkoutTemplateFields.name] as String,
       userID: json[WorkoutTemplateFields.userID] as String,
-      exerciseSets: json[WorkoutTemplateFields.exerciseSets] as Map,
+      exerciseSets: json[WorkoutTemplateFields.exerciseSets] as List,
     );
   }
 
@@ -33,13 +33,13 @@ class WorkoutTemplate {
     String? uid,
     String? name,
     String? userID,
-    Map? exerciseSets,
+    List? exerciseSets,
   }) {
     return WorkoutTemplate(
       uid: uid ?? this.uid,
       name: name ?? this.name,
       userID: userID ?? this.userID,
-      exerciseSets: exerciseSets ?? Map.from(this.exerciseSets),
+      exerciseSets: exerciseSets ?? List.from(this.exerciseSets),
     );
   }
 }

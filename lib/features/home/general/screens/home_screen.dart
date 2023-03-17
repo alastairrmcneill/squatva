@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 2;
+  int currentIndex = 1;
   List<Widget> screens = const [
     SocialScreen(),
     WorkoutsScreen(),
