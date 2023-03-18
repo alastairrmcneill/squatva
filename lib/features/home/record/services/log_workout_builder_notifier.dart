@@ -14,6 +14,7 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
         {
           'reps': 0,
           'weight': 0.0,
+          'complete': false,
         }
       ],
     });
@@ -22,6 +23,12 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
 
   removeExercise(int exerciseIndex) {
     exerciseSets.removeAt(exerciseIndex);
+    notifyListeners();
+  }
+
+  reorderExercise(int newIndex, int oldIndex) {
+    final item = exerciseSets.removeAt(oldIndex);
+    exerciseSets.insert(newIndex, item);
     notifyListeners();
   }
 
@@ -35,7 +42,18 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
     exerciseSets[exerciseIndex]['sets'].add({
       'reps': reps,
       'weight': weight,
+      'complete': false,
     });
+    notifyListeners();
+  }
+
+  remoteSetFromExercise(int exerciseIndex, int setNumber) {
+    (exerciseSets[exerciseIndex]['sets'] as List).removeAt(setNumber);
+    notifyListeners();
+  }
+
+  markSetAsDone(int exerciseIndex, int setNumber, bool done) {
+    exerciseSets[exerciseIndex]['sets'][setNumber]['complete'] = done;
     notifyListeners();
   }
 }

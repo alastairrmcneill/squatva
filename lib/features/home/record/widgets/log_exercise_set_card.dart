@@ -52,11 +52,18 @@ class LogExerciseSetCard extends StatelessWidget {
               PopupMenuButton(
                 icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (value) async {
+                  if (value == WorkoutExerciseTileMenuItems.item1) {
+                    showReorderLogBottomSheet(context, logWorkoutBuilderNotifier);
+                  }
                   if (value == WorkoutExerciseTileMenuItems.item2) {
                     logWorkoutBuilderNotifier.removeExercise(exerciseIndex);
                   }
                 },
                 itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: WorkoutExerciseTileMenuItems.item1,
+                    child: Text('Reorder Execise'),
+                  ),
                   PopupMenuItem(
                     value: WorkoutExerciseTileMenuItems.item2,
                     child: Text('Remove Execise'),
