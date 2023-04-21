@@ -9,3 +9,4 @@ export 'set_row.dart';
 export 'workout_templates/workout_template_list_tile.dart';
 export 'workout_templates/workout_template_list_view.dart';
 export 'pop_up_widgets/reorder_bottom_sheet.dart';
+export 'super_set_card.dart';

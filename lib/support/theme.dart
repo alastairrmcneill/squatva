@@ -27,4 +27,8 @@ class MyThemes {
       ),
     );
   }
+
+  static ThemeData get darkTheme {
+    return ThemeData();
+  }
 }

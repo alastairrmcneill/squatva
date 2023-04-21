@@ -1,8 +1,10 @@
+import 'package:squatva/general/models/models.dart';
+
 class WorkoutTemplate {
   String uid;
   String name;
   String userID;
-  List exerciseSets;
+  List<ExerciseSet> exerciseSets;
 
   WorkoutTemplate({
     this.uid = '',
@@ -16,16 +18,19 @@ class WorkoutTemplate {
       WorkoutTemplateFields.uid: uid,
       WorkoutTemplateFields.name: name,
       WorkoutTemplateFields.userID: userID,
-      WorkoutTemplateFields.exerciseSets: exerciseSets,
+      WorkoutTemplateFields.exerciseSets: List<dynamic>.from(exerciseSets.map((exerciseSet) => exerciseSet.toJSON())),
     };
   }
 
   static WorkoutTemplate fromJSON(json) {
+    List data = json[WorkoutTemplateFields.exerciseSets] as List;
+    List<ExerciseSet> exerciseSets = data.map((exerciseSet) => ExerciseSet.fromJSON(exerciseSet)).toList();
+
     return WorkoutTemplate(
       uid: json[WorkoutTemplateFields.uid] as String,
       name: json[WorkoutTemplateFields.name] as String,
       userID: json[WorkoutTemplateFields.userID] as String,
-      exerciseSets: json[WorkoutTemplateFields.exerciseSets] as List,
+      exerciseSets: exerciseSets,
     );
   }
 
@@ -33,7 +38,7 @@ class WorkoutTemplate {
     String? uid,
     String? name,
     String? userID,
-    List? exerciseSets,
+    List<ExerciseSet>? exerciseSets,
   }) {
     return WorkoutTemplate(
       uid: uid ?? this.uid,

@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:squatva/general/models/models.dart';
 
 class WorkoutTemplateBuilderNotifier extends ChangeNotifier {
   String name = '';
-  List exerciseSets = [];
+  List<ExerciseSet> exerciseSets = [];
 
   reset() {
     name = '';
     exerciseSets = [];
   }
 
-  addNewExercise(String exerciseId) {
-    exerciseSets.add({
-      'exerciseId': exerciseId,
-      'sets': [
-        {
-          'reps': 0,
-          'weight': 0.0,
-        }
-      ],
-    });
+  addNewExercise(String exerciseID) {
+    exerciseSets.add(
+      SingleExerciseSet(
+        exerciseID: exerciseID,
+        sets: [
+          {
+            'reps': 0,
+            'weight': 0.0,
+            'completed': false,
+          }
+        ],
+      ),
+    );
 
     notifyListeners();
   }
@@ -34,22 +38,40 @@ class WorkoutTemplateBuilderNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  addSetToExercise(int exerciseIndex) {
+  addSetToExercise(int exerciseIndex, int? superSetExerciseIndex) {
     int reps = 0;
     double weight = 0.0;
-    if (exerciseSets[exerciseIndex]['sets'].isNotEmpty) {
-      reps = exerciseSets[exerciseIndex]['sets'].last['reps'];
-      weight = exerciseSets[exerciseIndex]['sets'].last['weight'];
+    if (exerciseSets[exerciseIndex] is SingleExerciseSet) {
+      if ((exerciseSets[exerciseIndex] as SingleExerciseSet).sets.isNotEmpty) {
+        reps = (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['reps'];
+        weight = (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['weight'];
+      }
+      (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.add({
+        'reps': reps,
+        'weight': weight,
+        'completed': false,
+      });
+    } else if (exerciseSets[exerciseIndex] is Superset) {
+      if ((exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex!].sets.isNotEmpty) {
+        reps = (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.last['reps'];
+        weight = (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.last['weight'];
+      }
+      (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.add({
+        'reps': reps,
+        'weight': weight,
+        'completed': false,
+      });
     }
-    exerciseSets[exerciseIndex]['sets'].add({
-      'reps': reps,
-      'weight': weight,
-    });
     notifyListeners();
   }
 
-  remoteSetFromExercise(int exerciseIndex, int setNumber) {
-    (exerciseSets[exerciseIndex]['sets'] as List).removeAt(setNumber);
+  remoteSetFromExercise(int exerciseIndex, int setNumber, int? superSetExerciseIndex) {
+    if (exerciseSets[exerciseIndex] is SingleExerciseSet) {
+      (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.removeAt(setNumber);
+    } else if (exerciseSets[exerciseIndex] is Superset) {
+      (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex!].sets.removeAt(setNumber);
+    }
+
     notifyListeners();
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/record/services/services.dart';
+import 'package:squatva/general/models/models.dart';
 
 class LogSetRow extends StatelessWidget {
   final int exerciseIndex;
+  final int? superSetIndex;
   final int setNumber;
   final int reps;
   final double weight;
@@ -15,6 +17,7 @@ class LogSetRow extends StatelessWidget {
     required this.setNumber,
     required this.reps,
     required this.weight,
+    this.superSetIndex,
   }) {
     repsContorller = TextEditingController(text: reps.toString());
     weightController = TextEditingController(text: weight.toString());
@@ -26,7 +29,7 @@ class LogSetRow extends StatelessWidget {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        logWorkoutBuilderNotifier.remoteSetFromExercise(exerciseIndex, setNumber);
+        logWorkoutBuilderNotifier.removeSetFromExercise(exerciseIndex, setNumber, superSetIndex);
       },
       background: Container(
         color: Colors.red,
@@ -64,7 +67,11 @@ class LogSetRow extends StatelessWidget {
                     if (value.isNotEmpty) {
                       int _reps = int.parse(value);
 
-                      logWorkoutBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['reps'] = _reps;
+                      if (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] is SingleExerciseSet) {
+                        (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] as SingleExerciseSet).sets[setNumber]['reps'] = reps;
+                      } else {
+                        (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['reps'] = reps;
+                      }
                     }
                   },
                 ),
@@ -88,8 +95,11 @@ class LogSetRow extends StatelessWidget {
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       double weight = double.parse(value);
-
-                      logWorkoutBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['weight'] = weight;
+                      if (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] is SingleExerciseSet) {
+                        (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] as SingleExerciseSet).sets[setNumber]['weight'] = weight;
+                      } else {
+                        (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['weight'] = weight;
+                      }
                     }
                   },
                 ),
@@ -100,9 +110,11 @@ class LogSetRow extends StatelessWidget {
             width: 90,
             height: 30,
             child: Checkbox(
-              value: logWorkoutBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['complete'],
+              value: logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] is SingleExerciseSet
+                  ? (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] as SingleExerciseSet).sets[setNumber]['completed']
+                  : (logWorkoutBuilderNotifier.exerciseSets[exerciseIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['completed'],
               onChanged: (value) {
-                logWorkoutBuilderNotifier.markSetAsDone(exerciseIndex, setNumber, value!);
+                logWorkoutBuilderNotifier.markSetAsDone(exerciseIndex, superSetIndex, setNumber, value!);
               },
             ),
           ),

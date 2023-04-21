@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -13,7 +13,7 @@ import 'package:squatva/support/wrapper.dart';
 class AuthService {
   static FirebaseAuth _auth = FirebaseAuth.instance;
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
-  static final FacebookAuth _facebookAuth = FacebookAuth.instance;
+  // static final FacebookAuth _facebookAuth = FacebookAuth.instance;
 
   // User stream
   static Stream<User?> get appUserStream {
@@ -62,7 +62,6 @@ class AuthService {
       UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       // TODO: read user from database and update notifiers
-
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? "There has been an error logging in.");
     }
@@ -162,6 +161,7 @@ class AuthService {
         await _googleSignIn.disconnect();
       }
       await _auth.signOut();
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (_) => false);
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? "There was an error deleting your account");
     }
@@ -178,6 +178,7 @@ class AuthService {
       userNotifier.setCurrentUser = null;
       await UserDatabase.deleteUserWithUID(context, uid: _auth.currentUser!.uid);
       await _auth.currentUser?.delete();
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (_) => false);
     } on FirebaseAuthException catch (error) {
       showErrorDialog(context, message: error.message ?? "There was an error deleting your account");
     }

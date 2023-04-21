@@ -12,7 +12,7 @@ class WorkoutService {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context, listen: false);
     // Link to user
     String name = workoutTemplateBuilderNotifier.name;
-    List exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
+    List<ExerciseSet> exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
 
     WorkoutTemplate workoutTemplate = WorkoutTemplate(
       name: name,
@@ -63,7 +63,7 @@ class WorkoutService {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context, listen: false);
     // Link to user
     String name = workoutTemplateBuilderNotifier.name;
-    List exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
+    List<ExerciseSet> exerciseSets = workoutTemplateBuilderNotifier.exerciseSets;
 
     WorkoutTemplate newWorkoutTemplate = WorkoutTemplate(uid: uid, name: name, userID: AuthService.currentUserId!, exerciseSets: exerciseSets);
 

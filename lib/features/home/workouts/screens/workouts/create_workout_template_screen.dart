@@ -47,13 +47,23 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutTemplateScreen> {
         ...workoutTemplateBuilderNotifier.exerciseSets.map((exerciseSet) {
           int index = workoutTemplateBuilderNotifier.exerciseSets.indexOf(exerciseSet);
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ExerciseSetCard(
-              exerciseIndex: index,
-              exerciseSet: exerciseSet,
-            ),
-          );
+          if (exerciseSet is SingleExerciseSet) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ExerciseSetCard(
+                exerciseIndex: index,
+                exerciseSet: exerciseSet,
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: SuperSetCard(
+                exerciseIndex: index,
+                superset: exerciseSet as Superset,
+              ),
+            );
+          }
         }).toList(),
       ],
     );

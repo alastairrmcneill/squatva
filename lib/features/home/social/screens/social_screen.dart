@@ -5,8 +5,14 @@ class SocialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('''This is where we will build out our social feed so you can follow allong with your favourite athletes and friends to see what they are doing'''),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          '''Social feed \n\n Here you can follow your favourite athletes and friends to see what they are doing.''',
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

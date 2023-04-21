@@ -1,15 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/record/services/services.dart';
 import 'package:squatva/features/home/record/widgets/widgets.dart';
 import 'package:squatva/features/home/workouts/screens/screens.dart';
-
 import 'package:squatva/general/models/models.dart';
-import 'package:squatva/general/services/services.dart';
 
 class LogWorkoutScreen extends StatefulWidget {
   final WorkoutTemplate? workoutTemplate;
@@ -30,7 +25,10 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
     super.initState();
 
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context, listen: false);
-    logWorkoutBuilderNotifier.exerciseSets = widget.workoutTemplate?.exerciseSets ?? [];
+
+    if (widget.workoutTemplate != null) {
+      logWorkoutBuilderNotifier.exerciseSets = widget.workoutTemplate!.exerciseSets;
+    }
   }
 
   Widget _buildExerciseList(LogWorkoutBuilderNotifier logWorkoutBuilderNotifier) {
@@ -38,13 +36,24 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
       children: [
         ...logWorkoutBuilderNotifier.exerciseSets.map((exerciseSet) {
           int index = logWorkoutBuilderNotifier.exerciseSets.indexOf(exerciseSet);
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: LogExerciseSetCard(
-              exerciseIndex: index,
-              exerciseSet: exerciseSet,
-            ),
-          );
+
+          if (exerciseSet is SingleExerciseSet) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: LogExerciseSetCard(
+                exerciseIndex: index,
+                exerciseSet: exerciseSet as SingleExerciseSet,
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: LogSuperSetCard(
+                exerciseIndex: index,
+                superset: exerciseSet as Superset,
+              ),
+            );
+          }
         }).toList(),
       ],
     );
@@ -53,13 +62,15 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context);
+
     Timer(Duration(milliseconds: 10), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
             onPressed: () async {
-              await WorkoutService.logWorkout(context);
+              // await WorkoutService.logWorkout(context);
+              logWorkoutBuilderNotifier.setInProgress = false;
               Navigator.pop(context);
             },
             child: Text(
@@ -101,6 +112,14 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
                   });
                 },
                 child: Text('Add Exercise'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  logWorkoutBuilderNotifier.setInProgress = false;
+                  logWorkoutBuilderNotifier.exerciseSets = [];
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel Workout'),
               ),
             ],
           ),

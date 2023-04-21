@@ -8,7 +8,7 @@ import 'package:squatva/general/notifiers/notifiers.dart';
 
 class LogExerciseSetCard extends StatelessWidget {
   final int exerciseIndex;
-  final Map exerciseSet;
+  final SingleExerciseSet exerciseSet;
   const LogExerciseSetCard({
     Key? key,
     required this.exerciseIndex,
@@ -19,8 +19,8 @@ class LogExerciseSetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context);
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
-    Exercise exercise = exerciseNotifier.exerciseFromId(exerciseSet['exerciseId']);
-    final List<dynamic> sets = exerciseSet['sets'] as List<dynamic>;
+    Exercise exercise = exerciseNotifier.exerciseFromId(exerciseSet.exerciseID);
+    final List<dynamic> sets = exerciseSet.sets;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -55,7 +55,10 @@ class LogExerciseSetCard extends StatelessWidget {
                   if (value == WorkoutExerciseTileMenuItems.item1) {
                     showReorderLogBottomSheet(context, logWorkoutBuilderNotifier);
                   }
-                  if (value == WorkoutExerciseTileMenuItems.item2) {
+                  if (value == WorkoutExerciseTileMenuItems.item1) {
+                    // TODO: implement superset
+                  }
+                  if (value == WorkoutExerciseTileMenuItems.item3) {
                     logWorkoutBuilderNotifier.removeExercise(exerciseIndex);
                   }
                 },
@@ -66,6 +69,10 @@ class LogExerciseSetCard extends StatelessWidget {
                   ),
                   PopupMenuItem(
                     value: WorkoutExerciseTileMenuItems.item2,
+                    child: Text('Add To Superset'),
+                  ),
+                  PopupMenuItem(
+                    value: WorkoutExerciseTileMenuItems.item3,
                     child: Text('Remove Execise'),
                   ),
                 ],
@@ -103,7 +110,7 @@ class LogExerciseSetCard extends StatelessWidget {
           ),
           TextButton(
               onPressed: () {
-                logWorkoutBuilderNotifier.addSetToExercise(exerciseIndex);
+                logWorkoutBuilderNotifier.addSetToExercise(exerciseIndex, null);
               },
               child: Text('Add Set')),
         ],
@@ -114,5 +121,6 @@ class LogExerciseSetCard extends StatelessWidget {
 
 enum WorkoutExerciseTileMenuItems {
   item1,
-  item2;
+  item2,
+  item3;
 }

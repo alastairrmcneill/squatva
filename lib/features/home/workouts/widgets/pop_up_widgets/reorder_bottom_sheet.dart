@@ -24,10 +24,15 @@ showReorderBottomSheet(BuildContext context, WorkoutTemplateBuilderNotifier work
             ...workoutTemplateBuilderNotifier.exerciseSets.map((exerciseSet) {
               int index = workoutTemplateBuilderNotifier.exerciseSets.indexOf(exerciseSet);
               ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
-              Exercise exercise = exerciseNotifier.exerciseFromId(exerciseSet['exerciseId']);
+              String name = '';
+              if (exerciseSet is SingleExerciseSet) {
+                name = exerciseNotifier.exerciseFromId(exerciseSet.exerciseID).name;
+              } else {
+                name = 'Superset';
+              }
               return ListTile(
                 key: ValueKey<int>(index),
-                title: Text(exercise.name),
+                title: Text(name),
                 trailing: ReorderableDragStartListener(
                   key: ValueKey<double>(double.parse('$index.$index')),
                   index: index,

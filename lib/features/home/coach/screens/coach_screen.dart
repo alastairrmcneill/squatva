@@ -5,8 +5,14 @@ class CoachScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('''This is where we will build out functionality for coaches to create workouts, share them with atheletes and see how they are progressing through them.'''),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          '''Coaching Station\n\n Where you build workout programs and share with your athletes. Possibly a paid model in the future. ''',
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

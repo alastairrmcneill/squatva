@@ -9,7 +9,7 @@ import 'package:squatva/general/notifiers/notifiers.dart';
 
 class ExerciseSetCard extends StatelessWidget {
   final int exerciseIndex;
-  final Map exerciseSet;
+  final SingleExerciseSet exerciseSet;
   const ExerciseSetCard({
     Key? key,
     required this.exerciseIndex,
@@ -20,8 +20,8 @@ class ExerciseSetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     WorkoutTemplateBuilderNotifier workoutTemplateBuilderNotifier = Provider.of<WorkoutTemplateBuilderNotifier>(context);
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
-    Exercise exercise = exerciseNotifier.exerciseFromId(exerciseSet['exerciseId']);
-    final List<dynamic> sets = exerciseSet['sets'];
+    Exercise exercise = exerciseNotifier.exerciseFromId(exerciseSet.exerciseID);
+    final List<dynamic> sets = exerciseSet.sets;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -106,7 +106,7 @@ class ExerciseSetCard extends StatelessWidget {
           ),
           TextButton(
               onPressed: () {
-                workoutTemplateBuilderNotifier.addSetToExercise(exerciseIndex);
+                workoutTemplateBuilderNotifier.addSetToExercise(exerciseIndex, null);
               },
               child: Text('Add Set')),
         ],

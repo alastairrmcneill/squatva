@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/services/workout_template_builder_notifier.dart';
+import 'package:squatva/general/models/models.dart';
 
 class SetRow extends StatelessWidget {
   final int exerciseIndex;
+  final int? superSetIndex;
   final int setNumber;
   final int reps;
   final double weight;
@@ -16,6 +18,7 @@ class SetRow extends StatelessWidget {
     required this.setNumber,
     required this.reps,
     required this.weight,
+    this.superSetIndex,
   }) {
     repsContorller = TextEditingController(text: reps.toString());
     weightController = TextEditingController(text: weight.toString());
@@ -27,7 +30,7 @@ class SetRow extends StatelessWidget {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        workoutTemplateBuilderNotifier.remoteSetFromExercise(exerciseIndex, setNumber);
+        workoutTemplateBuilderNotifier.remoteSetFromExercise(exerciseIndex, setNumber, superSetIndex);
       },
       background: Container(
         color: Colors.red,
@@ -65,8 +68,11 @@ class SetRow extends StatelessWidget {
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       int _reps = int.parse(value);
-
-                      workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['reps'] = _reps;
+                      if (workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex] is SingleExerciseSet) {
+                        (workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex] as SingleExerciseSet).sets[setNumber]['reps'] = _reps;
+                      } else {
+                        (workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['reps'] = _reps;
+                      }
                     }
                   },
                 ),
@@ -91,8 +97,11 @@ class SetRow extends StatelessWidget {
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       double _weight = double.parse(value);
-
-                      workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex]['sets'][setNumber]['weight'] = _weight;
+                      if (workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex] is SingleExerciseSet) {
+                        (workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex] as SingleExerciseSet).sets[setNumber]['weight'] = _weight;
+                      } else {
+                        (workoutTemplateBuilderNotifier.exerciseSets[exerciseIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['weight'] = _weight;
+                      }
                     }
                   },
                 ),
