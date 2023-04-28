@@ -55,20 +55,20 @@ class ExerciseSetCard extends StatelessWidget {
               PopupMenuButton(
                 icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (value) async {
-                  if (value == WorkoutExerciseTileMenuItems.item1) {
+                  if (value == WorkoutTemplateExerciseTileMenuItems.item1) {
                     showReorderBottomSheet(context, workoutTemplateBuilderNotifier);
                   }
-                  if (value == WorkoutExerciseTileMenuItems.item2) {
+                  if (value == WorkoutTemplateExerciseTileMenuItems.item2) {
                     workoutTemplateBuilderNotifier.removeExercise(exerciseIndex);
                   }
                 },
                 itemBuilder: (context) => const [
                   PopupMenuItem(
-                    value: WorkoutExerciseTileMenuItems.item1,
+                    value: WorkoutTemplateExerciseTileMenuItems.item1,
                     child: Text('Reorder Exercise'),
                   ),
                   PopupMenuItem(
-                    value: WorkoutExerciseTileMenuItems.item2,
+                    value: WorkoutTemplateExerciseTileMenuItems.item2,
                     child: Text('Remove Execise'),
                   ),
                 ],
@@ -115,7 +115,7 @@ class ExerciseSetCard extends StatelessWidget {
   }
 }
 
-enum WorkoutExerciseTileMenuItems {
+enum WorkoutTemplateExerciseTileMenuItems {
   item1,
   item2;
 }

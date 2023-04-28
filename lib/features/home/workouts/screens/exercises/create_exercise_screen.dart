@@ -44,70 +44,88 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
   }
 
   Widget _buildNameFormField() {
-    return TextFormField(
-      controller: _nameTextEditingController,
-      maxLines: 1,
-      decoration: InputDecoration(hintText: 'Name'),
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'Required';
-        }
-      },
-      onSaved: (value) {
-        _nameTextEditingController.text = value!;
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _nameTextEditingController,
+        maxLines: 1,
+        decoration: InputDecoration(hintText: 'Name'),
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Required';
+          }
+        },
+        onSaved: (value) {
+          _nameTextEditingController.text = value!;
+        },
+      ),
     );
   }
 
   Widget _buildEquipmentDropdown() {
-    return DropdownButtonFormField<String>(
-      hint: const Text('Equipment'),
-      value: selectedEquipment,
-      items: equipmentList
-          .map(
-            (equiment) => DropdownMenuItem<String>(
-              value: equiment,
-              child: Text(equiment),
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        setState(() {
-          selectedEquipment = value as String;
-        });
-      },
-      validator: (value) {
-        if (selectedEquipment == null) {
-          return 'Required';
-        }
-        return null;
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DropdownButtonFormField<String>(
+        hint: const Text('Equipment'),
+        value: selectedEquipment,
+        items: equipmentList
+            .map(
+              (equiment) => DropdownMenuItem<String>(
+                value: equiment,
+                child: Text(equiment),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            selectedEquipment = value as String;
+          });
+        },
+        validator: (value) {
+          if (selectedEquipment == null) {
+            return 'Required';
+          }
+          return null;
+        },
+      ),
     );
   }
 
   Widget _buildMusclesUsedFormField() {
-    return TextFormField(
-      controller: _musclesUsedTextEditingController,
-      maxLines: 1,
-      decoration: const InputDecoration(hintText: 'Muscles used (separate by ",")'),
-      onSaved: (value) {
-        _musclesUsedTextEditingController.text = value ?? '';
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _musclesUsedTextEditingController,
+        maxLines: 1,
+        decoration: const InputDecoration(hintText: 'Muscles used (separate by ",")'),
+        onSaved: (value) {
+          _musclesUsedTextEditingController.text = value ?? '';
+        },
+      ),
     );
   }
 
   Widget _buildAdvancedButton() {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          expanded = !expanded;
-        });
-      },
-      child: Row(
-        children: [
-          const Text('Advanced'),
-          Icon(expanded ? Icons.arrow_drop_down_sharp : Icons.arrow_right_sharp),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            expanded = !expanded;
+          });
+        },
+        child: Row(
+          children: [
+            Text(
+              'Advanced',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            Icon(
+              expanded ? Icons.arrow_drop_down_sharp : Icons.arrow_right_sharp,
+              color: Theme.of(context).textTheme.bodyLarge!.color,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -124,63 +142,75 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
   }
 
   Widget _buildLinkFormField() {
-    return TextFormField(
-      controller: _linkTextEditingController,
-      maxLines: 1,
-      decoration: const InputDecoration(hintText: 'Link'),
-      onSaved: (value) {
-        _linkTextEditingController.text = value ?? '';
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _linkTextEditingController,
+        maxLines: 1,
+        decoration: const InputDecoration(hintText: 'Link'),
+        onSaved: (value) {
+          _linkTextEditingController.text = value ?? '';
+        },
+      ),
     );
   }
 
   Widget _buildNoteFormField() {
-    return TextFormField(
-      controller: _noteTextEditingController,
-      decoration: const InputDecoration(hintText: 'Note'),
-      onSaved: (value) {
-        _noteTextEditingController.text = value ?? '';
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _noteTextEditingController,
+        decoration: const InputDecoration(hintText: 'Note'),
+        onSaved: (value) {
+          _noteTextEditingController.text = value ?? '';
+        },
+      ),
     );
   }
 
   Widget _buildCategoryDropdown() {
-    return DropdownButtonFormField<String>(
-      hint: const Text('Category'),
-      value: selectedCategory,
-      items: categoryList
-          .map(
-            (category) => DropdownMenuItem<String>(
-              value: category,
-              child: Text(category),
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        setState(() {
-          selectedCategory = value as String;
-        });
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DropdownButtonFormField<String>(
+        hint: const Text('Category'),
+        value: selectedCategory,
+        items: categoryList
+            .map(
+              (category) => DropdownMenuItem<String>(
+                value: category,
+                child: Text(category),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            selectedCategory = value as String;
+          });
+        },
+      ),
     );
   }
 
   Widget _buildLimbDropdown() {
-    return DropdownButtonFormField<String>(
-      hint: const Text('Limb involvment'),
-      value: selectedLimb,
-      items: limbList
-          .map(
-            (limb) => DropdownMenuItem<String>(
-              value: limb,
-              child: Text(limb),
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        setState(() {
-          selectedLimb = value as String;
-        });
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DropdownButtonFormField<String>(
+        hint: const Text('Limb involvment'),
+        value: selectedLimb,
+        items: limbList
+            .map(
+              (limb) => DropdownMenuItem<String>(
+                value: limb,
+                child: Text(limb),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            selectedLimb = value as String;
+          });
+        },
+      ),
     );
   }
 
@@ -221,7 +251,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.exercise == null ? 'Create Exercise' : 'Edit Exercise'),
+        title: Text(widget.exercise == null ? 'Create Custom Exercise' : 'Edit Custom Exercise'),
         actions: [
           TextButton(
             onPressed: () async {
@@ -229,7 +259,6 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
             },
             child: const Text(
               'Save',
-              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -237,14 +266,17 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              _buildNameFormField(),
-              _buildEquipmentDropdown(),
-              _buildMusclesUsedFormField(),
-              _buildAdvancedButton(),
-              expanded ? _buildAdvancedFormSection() : const SizedBox(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              children: [
+                _buildNameFormField(),
+                _buildEquipmentDropdown(),
+                _buildMusclesUsedFormField(),
+                _buildAdvancedButton(),
+                expanded ? _buildAdvancedFormSection() : const SizedBox(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/features/home/record/services/services.dart';
-import 'package:squatva/features/home/record/widgets/widgets.dart';
 import 'package:squatva/features/home/workouts/screens/screens.dart';
+import 'package:squatva/features/home/workouts/services/services.dart';
+import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
 
 class LogWorkoutScreen extends StatefulWidget {
@@ -29,6 +29,25 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
     if (widget.workoutTemplate != null) {
       logWorkoutBuilderNotifier.exerciseSets = widget.workoutTemplate!.exerciseSets;
     }
+  }
+
+  Widget _buildStartingText() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+      child: Column(
+        children: [
+          Text(
+            'Get Started',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Add an exercise to start your workout',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildExerciseList(LogWorkoutBuilderNotifier logWorkoutBuilderNotifier) {
@@ -73,53 +92,50 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
               logWorkoutBuilderNotifier.setInProgress = false;
               Navigator.pop(context);
             },
-            child: Text(
-              "Save",
-              style: TextStyle(color: Colors.white),
+            child: const Text(
+              "Finish Workout",
             ),
           ),
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        child: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             children: [
-              Expanded(
-                flex: 1,
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('Exercises'),
-                          Expanded(flex: 1, child: Container()),
-                        ],
-                      ),
-                      const Divider(),
-                      logWorkoutBuilderNotifier.exerciseSets.isNotEmpty ? _buildExerciseList(logWorkoutBuilderNotifier) : Text('Get started by adding an exercise'),
-                    ],
+              logWorkoutBuilderNotifier.exerciseSets.isEmpty ? _buildStartingText() : _buildExerciseList(logWorkoutBuilderNotifier),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Exercise? result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ExerciseSelectScreen()));
+                      if (result == null) return;
+                      setState(() {
+                        logWorkoutBuilderNotifier.addNewExercise(result.id!);
+                      });
+                    },
+                    child: const Text('Add Exercise'),
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  Exercise? result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ExerciseSelectScreen()));
-                  if (result == null) return;
-                  setState(() {
-                    logWorkoutBuilderNotifier.addNewExercise(result.id!);
-                  });
-                },
-                child: Text('Add Exercise'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  logWorkoutBuilderNotifier.setInProgress = false;
-                  logWorkoutBuilderNotifier.exerciseSets = [];
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel Workout'),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+                  child: TextButton(
+                    onPressed: () async {
+                      logWorkoutBuilderNotifier.setInProgress = false;
+                      logWorkoutBuilderNotifier.exerciseSets = [];
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Cancel Workout',
+                      style: TextStyle(color: Colors.red[600]),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

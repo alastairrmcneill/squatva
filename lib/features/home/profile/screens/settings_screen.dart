@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:squatva/general/notifiers/notifiers.dart';
 import 'package:squatva/general/services/auth_service.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -6,6 +9,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -25,7 +29,14 @@ class SettingsScreen extends StatelessWidget {
             onTap: () async {
               await AuthService.delete(context);
             },
-          )
+          ),
+          ListTile(
+            title: const Text('Dark Theme'),
+            trailing: Switch(
+              value: settingsNotifier.darkMode,
+              onChanged: (value) => settingsNotifier.setDarkMode(value),
+            ),
+          ),
         ],
       ),
     );

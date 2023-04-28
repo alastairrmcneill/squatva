@@ -1,7 +1,0 @@
-This is where we will house the functionality to record a workout
-from scratch or from a pre-made workout that will be pulled from the other tab
-
-The exercsies will be pulled from the default exercises or from the database
-Filtering is option here to
-    Some cross over between functions but not needed in general i don't think
-

@@ -27,6 +27,7 @@ class _Filter1State extends State<ExerciseFilter> {
           children: [
             Row(
               children: [
+                const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
                     controller: textEditingController,
@@ -54,19 +55,9 @@ class _Filter1State extends State<ExerciseFilter> {
                 ),
                 IconButton(
                   onPressed: () => setState(() => showAdvanced = !showAdvanced),
-                  // onPressed: () => Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (_) => FilterScreen(
-                  //       preSelectedEquipmentTags: exerciseNotifier.filterEquipmentTags,
-                  //       preSelectedCategoryTags: exerciseNotifier.filterCategoryTags,
-                  //       preSelectedLimbTags: exerciseNotifier.filterLimbTags,
-                  //     ),
-                  //   ),
-                  // ),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.filter_list_rounded,
-                    color: Colors.blue,
+                    color: Theme.of(context).accentColor,
                   ),
                 ),
               ],

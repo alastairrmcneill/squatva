@@ -19,7 +19,10 @@ class ExerciseSelectScreen extends StatelessWidget {
               },
               trailing: IconButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ExerciseDetailScreen(exercise: exercise))),
-                icon: Icon(Icons.chevron_right_rounded),
+                icon: Icon(
+                  Icons.chevron_right_rounded,
+                  color: Theme.of(context).textTheme.bodyLarge!.color,
+                ),
               ),
             ),
           )
@@ -33,11 +36,11 @@ class ExerciseSelectScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CreateExerciseScreen())),
-            child: Text(
-              'Create',
-              style: TextStyle(color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: TextButton(
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CreateExerciseScreen())),
+              child: const Text('Custom Exercise'),
             ),
           ),
         ],
@@ -47,7 +50,7 @@ class ExerciseSelectScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const ExerciseFilter(),
-            exerciseNotifier.filteredExerciseList.isNotEmpty ? _buildList(context, exerciseNotifier) : Text('No exercises found'),
+            exerciseNotifier.filteredExerciseList.isNotEmpty ? _buildList(context, exerciseNotifier) : const Center(child: Text('No exercises found')),
           ],
         ),
       ),

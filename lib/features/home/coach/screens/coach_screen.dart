@@ -5,12 +5,13 @@ class CoachScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Text(
           '''Coaching Station\n\n Where you build workout programs and share with your athletes. Possibly a paid model in the future. ''',
           textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

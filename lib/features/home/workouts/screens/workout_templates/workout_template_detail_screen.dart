@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/screens/screens.dart';
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
-
 import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/workout_template_notifier.dart';
 

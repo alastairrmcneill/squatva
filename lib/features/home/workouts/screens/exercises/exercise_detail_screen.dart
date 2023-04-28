@@ -40,6 +40,13 @@ class ExerciseDetailScreen extends StatelessWidget {
               : const SizedBox(),
         ],
       ),
+      body: Center(
+        child: Text(
+          '''ExerciseDetail\n\n This is where you can find stats, notes etc. on the exercise. ''',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ),
     );
   }
 }

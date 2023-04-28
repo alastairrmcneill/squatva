@@ -5,6 +5,42 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
   List<ExerciseSet> exerciseSets = [];
   bool inProgress = false;
 
+  int get getTotalExercises {
+    int total = 0;
+    for (var exerciseSet in exerciseSets) {
+      if (exerciseSet is SingleExerciseSet) {
+        for (var set in exerciseSet.sets) {
+          total++;
+        }
+      } else if (exerciseSet is Superset) {
+        for (var singleExerciseSet in exerciseSet.exercises) {
+          for (var set in singleExerciseSet.sets) {
+            total++;
+          }
+        }
+      }
+    }
+    return total;
+  }
+
+  int get remainingExercises {
+    int remaining = 0;
+    for (var exerciseSet in exerciseSets) {
+      if (exerciseSet is SingleExerciseSet) {
+        for (var set in exerciseSet.sets) {
+          if (!set['completed']) remaining++;
+        }
+      } else if (exerciseSet is Superset) {
+        for (var singleExerciseSet in exerciseSet.exercises) {
+          for (var set in singleExerciseSet.sets) {
+            if (!set['completed']) remaining++;
+          }
+        }
+      }
+    }
+    return remaining;
+  }
+
   set setInProgress(inProgress) {
     this.inProgress = inProgress;
     notifyListeners();
@@ -47,6 +83,8 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
 
     if (exerciseSets[exerciseIndex] is SingleExerciseSet) {
       if ((exerciseSets[exerciseIndex] as SingleExerciseSet).sets.isNotEmpty) {
+        print('reps');
+        print((exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['reps']);
         reps = (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['reps'];
         weight = (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['weight'];
       }
@@ -55,17 +93,18 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
         'weight': weight,
         'completed': false,
       });
-    } else if (exerciseSets[exerciseIndex] is Superset) {
-      if ((exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex!].sets.isNotEmpty) {
-        reps = (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.last['reps'];
-        weight = (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.last['weight'];
-      }
-      (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.add({
-        'reps': reps,
-        'weight': weight,
-        'completed': false,
-      });
     }
+    //  else if (exerciseSets[exerciseIndex] is Superset) {
+    //   if ((exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex!].sets.isNotEmpty) {
+    //     reps = (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.last['reps'];
+    //     weight = (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.last['weight'];
+    //   }
+    //   (exerciseSets[exerciseIndex] as Superset).exercises[superSetExerciseIndex].sets.add({
+    //     'reps': reps,
+    //     'weight': weight,
+    //     'completed': false,
+    //   });
+    // }
     notifyListeners();
   }
 
@@ -101,6 +140,22 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
           }
         }
       }
+    }
+  }
+
+  void updateRep(int exerciseSetIndex, int? superSetIndex, int setNumber, int reps) {
+    if (exerciseSets[exerciseSetIndex] is SingleExerciseSet) {
+      (exerciseSets[exerciseSetIndex] as SingleExerciseSet).sets[setNumber]['reps'] = reps;
+    } else {
+      (exerciseSets[exerciseSetIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['reps'] = reps;
+    }
+  }
+
+  void updateWeight(int exerciseSetIndex, int? superSetIndex, int setNumber, double weight) {
+    if (exerciseSets[exerciseSetIndex] is SingleExerciseSet) {
+      (exerciseSets[exerciseSetIndex] as SingleExerciseSet).sets[setNumber]['weight'] = weight;
+    } else {
+      (exerciseSets[exerciseSetIndex] as Superset).exercises[superSetIndex!].sets[setNumber]['weight'] = weight;
     }
   }
 }

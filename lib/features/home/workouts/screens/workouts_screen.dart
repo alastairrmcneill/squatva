@@ -1,49 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/features/home/workouts/screens/screens.dart';
-import 'package:squatva/general/models/models.dart';
+import 'package:squatva/features/home/general/widgets/widgets.dart';
+import 'package:squatva/features/home/record/services/log_workout_builder_notifier.dart';
+import 'package:squatva/features/home/workouts/widgets/widgets.dart';
+
 import 'package:squatva/general/notifiers/notifiers.dart';
 
 class WorkoutsScreen extends StatelessWidget {
   const WorkoutsScreen({super.key});
 
-  Widget _buildList(BuildContext context, WorkoutTemplateNotifier workoutTemplateNotifier) {
-    return Column(
-      children: workoutTemplateNotifier.workoutTemplateList.map((WorkoutTemplate workoutTemplate) {
-        return ListTile(
-            title: Text(workoutTemplate.name),
-            onTap: () {
-              workoutTemplateNotifier.setCurrentWorkoutTemplate = workoutTemplate;
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => WorkoutTemplateDetailScreen(),
-                ),
-              );
-            });
-      }).toList(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context);
-    return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
+
+    return Scaffold(
+      appBar: CustomAppBar(),
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            workoutTemplateNotifier.workoutTemplateList.isNotEmpty ? _buildList(context, workoutTemplateNotifier) : Text('No workout templates found'),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const CreateWorkoutTemplateScreen(),
-                ),
-              ),
-              child: Text('Create workout template'),
-            )
+            CurrentWorkoutOverlay(),
+            RecordWorkoutButton(),
+            WorkoutTemplateList(
+              title: 'My Templates',
+              workoutTemplates: workoutTemplateNotifier.workoutTemplateList,
+            ),
+            const SizedBox(height: 20),
+            WorkoutTemplateList(
+              title: 'Shared with me',
+              workoutTemplates: workoutTemplateNotifier.workoutTemplateList,
+            ),
           ],
         ),
       ),

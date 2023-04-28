@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:squatva/features/home/record/services/services.dart';
+import 'package:squatva/features/home/workouts/services/services.dart';
 import 'package:squatva/features/home/workouts/services/workout_template_builder_notifier.dart';
 import 'package:squatva/general/models/models.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
