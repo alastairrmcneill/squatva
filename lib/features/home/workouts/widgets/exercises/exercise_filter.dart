@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 import 'package:squatva/general/models/models.dart';
@@ -19,7 +20,7 @@ class _Filter1State extends State<ExerciseFilter> {
   Widget build(BuildContext context) {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: SizedBox(
         height: showAdvanced ? 110 : 55,
         child: Column(
@@ -27,37 +28,44 @@ class _Filter1State extends State<ExerciseFilter> {
           children: [
             Row(
               children: [
-                const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
                     controller: textEditingController,
                     decoration: InputDecoration(
-                      hintText: 'Search',
-                      prefixIcon: const Icon(Icons.search),
-                      isDense: true,
-                      suffixIcon: textEditingController.text.isNotEmpty
-                          ? IconButton(
-                              onPressed: () {
-                                textEditingController.clear();
-                                exerciseNotifier.setFilterString("");
-                              },
-                              icon: const Icon(
-                                Icons.clear,
-                                color: Colors.grey,
+                        hintText: 'Search',
+                        prefixIcon: const Icon(Icons.search),
+                        isDense: true,
+                        suffixIcon: IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              textEditingController.text.isNotEmpty
+                                  ? IconButton(
+                                      onPressed: () {
+                                        textEditingController.clear();
+                                        exerciseNotifier.setFilterString("");
+                                      },
+                                      icon: const Icon(
+                                        Icons.clear,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              VerticalDivider(),
+                              IconButton(
+                                onPressed: () => setState(() => showAdvanced = !showAdvanced),
+                                icon: Icon(
+                                  FontAwesomeIcons.sliders,
+                                  color: Theme.of(context).accentColor,
+                                ),
                               ),
-                            )
-                          : const SizedBox(),
-                    ),
+                            ],
+                          ),
+                        )),
                     onChanged: (value) {
                       exerciseNotifier.setFilterString(value);
                     },
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => setState(() => showAdvanced = !showAdvanced),
-                  icon: Icon(
-                    Icons.filter_list_rounded,
-                    color: Theme.of(context).accentColor,
                   ),
                 ),
               ],
@@ -66,7 +74,7 @@ class _Filter1State extends State<ExerciseFilter> {
                 ? Column(
                     children: [
                       const SizedBox(height: 5),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -99,7 +107,6 @@ class _Filter1State extends State<ExerciseFilter> {
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[400]),
-                                  elevation: MaterialStateProperty.all<double?>(0),
                                   side: MaterialStateProperty.all<BorderSide?>(
                                     BorderSide(color: const Color(0xFF616161), width: 0.5),
                                   ),

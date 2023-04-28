@@ -43,6 +43,8 @@ class MyThemes {
           ),
         ),
       ),
+      dialogBackgroundColor: _darkThemeCardColor,
+      popupMenuTheme: PopupMenuThemeData(textStyle: TextStyle(color: _darkThemeCardColor)),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color?>(_darkThemeAccent),
@@ -62,7 +64,7 @@ class MyThemes {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: _darkThemeAccent.withOpacity(0.3),
+            color: _darkThemeAccent.withOpacity(0.6),
           ),
         ),
         errorBorder: OutlineInputBorder(

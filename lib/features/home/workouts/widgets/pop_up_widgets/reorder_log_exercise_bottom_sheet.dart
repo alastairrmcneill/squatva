@@ -10,6 +10,7 @@ showReorderLogBottomSheet(BuildContext context, LogWorkoutBuilderNotifier logWor
     context: context,
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
     builder: (context) => StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+      SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
       return Container(
         margin: const EdgeInsets.all(10),
         height: 300,
@@ -33,7 +34,7 @@ showReorderLogBottomSheet(BuildContext context, LogWorkoutBuilderNotifier logWor
               }
               return ListTile(
                 key: ValueKey<int>(index),
-                title: Text(name),
+                title: Text(name, style: TextStyle(color: settingsNotifier.darkMode ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).textTheme.bodyLarge!.color!)),
                 trailing: ReorderableDragStartListener(
                   key: ValueKey<double>(double.parse('$index.$index')),
                   index: index,

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:squatva/features/home/workouts/services/services.dart';
 import 'package:squatva/general/models/models.dart';
 import 'package:intl/intl.dart';
+import 'package:squatva/general/notifiers/notifiers.dart';
 
 class LogSetRow extends StatelessWidget {
   final int exerciseIndex;
@@ -32,7 +33,7 @@ class LogSetRow extends StatelessWidget {
       return formatter.format(v);
     }
 
-    weightController = TextEditingController(text: formatQuantity(weight)); // weight.toStringAsFixed(weight.truncateToDouble() == weight ? 0 : 1));
+    weightController = TextEditingController(text: formatQuantity(weight));
   }
 
   Widget _buildDivider(context) {
@@ -69,11 +70,13 @@ class LogSetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context);
+    SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context);
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
         logWorkoutBuilderNotifier.removeSetFromExercise(exerciseIndex, setNumber, superSetIndex);
       },
+      direction: DismissDirection.endToStart,
       background: Container(
         color: Colors.red,
         child: Row(
@@ -101,10 +104,17 @@ class LogSetRow extends StatelessWidget {
                   child: TextField(
                     controller: repsContorller,
                     textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: '-',
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      enabledBorder: settingsNotifier.darkMode
+                          ? OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            )
+                          : null,
+                      fillColor: settingsNotifier.darkMode ? Theme.of(context).scaffoldBackgroundColor : null,
                     ),
                     onChanged: (value) {
                       if (value.isNotEmpty) {
@@ -129,6 +139,13 @@ class LogSetRow extends StatelessWidget {
                       hintText: '-',
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      enabledBorder: settingsNotifier.darkMode
+                          ? OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            )
+                          : null,
+                      fillColor: settingsNotifier.darkMode ? Theme.of(context).scaffoldBackgroundColor : null,
                     ),
                     onChanged: (value) {
                       if (value.isNotEmpty) {

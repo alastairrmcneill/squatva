@@ -22,23 +22,23 @@ class FilterExerciseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context);
     return ElevatedButton(
-        onPressed: () {
-          showFilterBottomSheet(
-            context,
-            exerciseNotifier,
-            title: title,
-            filterOptions: filterOptions,
-            selectedTags: preSelectedTags,
-          );
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(selected ? Colors.blue : Colors.white),
-          foregroundColor: MaterialStateProperty.all<Color?>(selected ? Colors.white : Color(0xFF616161)),
-          elevation: MaterialStateProperty.all<double?>(0),
-          side: MaterialStateProperty.all<BorderSide?>(
-            BorderSide(color: selected ? Colors.transparent : const Color(0xFF616161), width: 0.5),
-          ),
+      onPressed: () {
+        showFilterBottomSheet(
+          context,
+          exerciseNotifier,
+          title: title,
+          filterOptions: filterOptions,
+          selectedTags: preSelectedTags,
+        );
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color?>(selected ? Theme.of(context).accentColor : Colors.white),
+        foregroundColor: MaterialStateProperty.all<Color?>(selected ? Colors.white : Color(0xFF616161)),
+        side: MaterialStateProperty.all<BorderSide?>(
+          BorderSide(color: selected ? Colors.transparent : const Color(0xFF616161), width: 0.5),
         ),
-        child: Text(title));
+      ),
+      child: Text(title),
+    );
   }
 }

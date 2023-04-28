@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:squatva/general/notifiers/notifiers.dart';
 
 showFilterBottomSheet(BuildContext context, ExerciseNotifier exerciseNotifier, {required String title, required List<String> filterOptions, required List<String> selectedTags}) {
@@ -6,6 +8,7 @@ showFilterBottomSheet(BuildContext context, ExerciseNotifier exerciseNotifier, {
     context: context,
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
     builder: (context) => StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+      SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
       return Container(
         margin: const EdgeInsets.all(10),
         height: 300,
@@ -14,10 +17,11 @@ showFilterBottomSheet(BuildContext context, ExerciseNotifier exerciseNotifier, {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 decoration: TextDecoration.underline,
                 decorationThickness: 0.5,
+                color: settingsNotifier.darkMode ? Theme.of(context).cardTheme.color! : Theme.of(context).textTheme.bodyLarge!.color!,
               ),
             ),
             Wrap(
@@ -37,7 +41,10 @@ showFilterBottomSheet(BuildContext context, ExerciseNotifier exerciseNotifier, {
                               }
                             }),
                           ),
-                          Text(equipment),
+                          Text(
+                            equipment,
+                            style: TextStyle(color: settingsNotifier.darkMode ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).textTheme.bodyLarge!.color!),
+                          ),
                         ],
                       ),
                     ),

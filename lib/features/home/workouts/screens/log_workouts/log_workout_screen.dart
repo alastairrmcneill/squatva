@@ -89,7 +89,9 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
           TextButton(
             onPressed: () async {
               // await WorkoutService.logWorkout(context);
+              await showFinishLoggingWorkoutDialog(context);
               logWorkoutBuilderNotifier.setInProgress = false;
+
               Navigator.pop(context);
             },
             child: const Text(

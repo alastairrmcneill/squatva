@@ -1,0 +1,1 @@
+To delete your account go to the profile tab, press the settings icon in the top corner and select delete account.

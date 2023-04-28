@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squatva/features/home/general/widgets/widgets.dart';
-import 'package:squatva/features/home/record/services/log_workout_builder_notifier.dart';
 import 'package:squatva/features/home/workouts/widgets/widgets.dart';
 
 import 'package:squatva/general/notifiers/notifiers.dart';
