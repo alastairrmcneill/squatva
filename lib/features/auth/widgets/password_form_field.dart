@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class PasswordFormField extends StatefulWidget {
   final TextEditingController textEditingController;
-  const PasswordFormField({Key? key, required this.textEditingController}) : super(key: key);
+  const PasswordFormField({Key? key, required this.textEditingController})
+      : super(key: key);
 
   @override
   State<PasswordFormField> createState() => _PasswordFormFieldState();
@@ -24,7 +25,9 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
               _obscureText = !_obscureText;
             });
           },
-          icon: _obscureText ? const Icon(Icons.visibility_off_rounded) : const Icon(Icons.visibility_rounded),
+          icon: _obscureText
+              ? const Icon(Icons.visibility_off_rounded)
+              : const Icon(Icons.visibility_rounded),
         ),
       ),
       maxLines: 1,

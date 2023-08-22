@@ -54,10 +54,11 @@ class _Filter1State extends State<ExerciseFilter> {
                                   : const SizedBox(),
                               VerticalDivider(),
                               IconButton(
-                                onPressed: () => setState(() => showAdvanced = !showAdvanced),
+                                onPressed: () =>
+                                    setState(() => showAdvanced = !showAdvanced),
                                 icon: Icon(
                                   FontAwesomeIcons.sliders,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).hintColor,
                                 ),
                               ),
                             ],
@@ -103,12 +104,15 @@ class _Filter1State extends State<ExerciseFilter> {
                               const SizedBox(width: 5),
                               ElevatedButton(
                                 onPressed: () {
-                                  exerciseNotifier.setFilterTags(equipmentTags: [], categoryTags: [], limbTags: []);
+                                  exerciseNotifier.setFilterTags(
+                                      equipmentTags: [], categoryTags: [], limbTags: []);
                                 },
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[400]),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color?>(Colors.grey[400]),
                                   side: MaterialStateProperty.all<BorderSide?>(
-                                    BorderSide(color: const Color(0xFF616161), width: 0.5),
+                                    BorderSide(
+                                        color: const Color(0xFF616161), width: 0.5),
                                   ),
                                 ),
                                 child: Text('Clear'),

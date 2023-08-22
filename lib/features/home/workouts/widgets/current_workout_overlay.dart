@@ -9,7 +9,8 @@ class CurrentWorkoutOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context);
+    LogWorkoutBuilderNotifier logWorkoutBuilderNotifier =
+        Provider.of<LogWorkoutBuilderNotifier>(context);
 
     if (!logWorkoutBuilderNotifier.inProgress) return const SizedBox(height: 10);
 
@@ -20,7 +21,8 @@ class CurrentWorkoutOverlay extends StatelessWidget {
     if (totalExercises == 0) percentComplete = 0;
 
     return InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LogWorkoutScreen())),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const LogWorkoutScreen())),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Card(
@@ -43,15 +45,19 @@ class CurrentWorkoutOverlay extends StatelessWidget {
                       ),
                       Text(
                         '$remainingExercises set${remainingExercises == 1 ? '' : 's'} left',
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w300),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(fontWeight: FontWeight.w300),
                       ),
                     ],
                   ),
                   CircularPercentIndicator(
                     radius: 35,
                     percent: percentComplete,
-                    progressColor: Theme.of(context).accentColor,
-                    backgroundColor: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.2),
+                    progressColor: Theme.of(context).hintColor,
+                    backgroundColor:
+                        Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.2),
                     circularStrokeCap: CircularStrokeCap.round,
                     center: Text(
                       '${(percentComplete * 100).toStringAsFixed(0)}%',

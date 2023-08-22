@@ -82,17 +82,18 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
   Widget build(BuildContext context) {
     LogWorkoutBuilderNotifier logWorkoutBuilderNotifier = Provider.of<LogWorkoutBuilderNotifier>(context);
 
-    Timer(Duration(milliseconds: 10), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+    // Timer(Duration(milliseconds: 10), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
             onPressed: () async {
-              // await WorkoutService.logWorkout(context);
-              await showFinishLoggingWorkoutDialog(context);
-              logWorkoutBuilderNotifier.setInProgress = false;
+              // // await WorkoutService.logWorkout(context);
+              // await showFinishLoggingWorkoutDialog(context);
+              // logWorkoutBuilderNotifier.setInProgress = false;
 
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const SaveWorkoutScreen()));
             },
             child: const Text(
               "Finish Workout",

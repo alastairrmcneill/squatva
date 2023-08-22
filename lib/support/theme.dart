@@ -11,7 +11,7 @@ class MyThemes {
         elevation: 0,
         centerTitle: false,
       ),
-      accentColor: _darkThemeAccent,
+      hintColor: _darkThemeAccent,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: _darkThemeAccent,
         unselectedItemColor: Color.fromARGB(255, 238, 238, 238),
@@ -34,7 +34,8 @@ class MyThemes {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color?>(_darkThemeAccent),
           foregroundColor: MaterialStateProperty.all<Color?>(_darkThemeTextColor),
-          textStyle: MaterialStateProperty.all<TextStyle?>(const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+          textStyle: MaterialStateProperty.all<TextStyle?>(
+              const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
           elevation: MaterialStateProperty.all<double?>(0),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
@@ -44,7 +45,8 @@ class MyThemes {
         ),
       ),
       dialogBackgroundColor: _darkThemeCardColor,
-      popupMenuTheme: PopupMenuThemeData(textStyle: TextStyle(color: _darkThemeCardColor)),
+      popupMenuTheme:
+          PopupMenuThemeData(textStyle: TextStyle(color: _darkThemeCardColor)),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color?>(_darkThemeAccent),
@@ -103,7 +105,7 @@ class MyThemes {
         elevation: 0,
         centerTitle: false,
       ),
-      accentColor: _lightThemeAccent,
+      hintColor: _lightThemeAccent,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: _lightThemeAccent,
         unselectedItemColor: Color.fromARGB(255, 238, 238, 238),
@@ -127,7 +129,8 @@ class MyThemes {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color?>(_lightThemeAccent),
           foregroundColor: MaterialStateProperty.all<Color?>(const Color(0xFFFFFFFF)),
-          textStyle: MaterialStateProperty.all<TextStyle?>(const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+          textStyle: MaterialStateProperty.all<TextStyle?>(
+              const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
           elevation: MaterialStateProperty.all<double?>(2),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
@@ -139,7 +142,8 @@ class MyThemes {
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color?>(_lightThemeAccent),
-          textStyle: MaterialStateProperty.all<TextStyle?>(const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+          textStyle: MaterialStateProperty.all<TextStyle?>(
+              const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
         ),
       ),
       textSelectionTheme: TextSelectionThemeData(cursorColor: _lightThemeAccent),
@@ -190,5 +194,6 @@ Color _darkThemeTextColor = const Color.fromARGB(255, 238, 238, 238);
 
 Color _lightThemeBackgroundColor = Color.fromARGB(255, 234, 239, 239);
 Color _lightThemeCardColor = const Color(0xFFFFFFFF);
-Color _lightThemeAccent = Color.fromARGB(255, 91, 149, 176); //const Color(0xFF6DA273);  //const Color(0xFFEE5E44);
+Color _lightThemeAccent = Color.fromARGB(
+    255, 91, 149, 176); //const Color(0xFF6DA273);  //const Color(0xFFEE5E44);
 Color _lightThemeTextColor = Color.fromARGB(255, 79, 81, 84);

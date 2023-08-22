@@ -83,8 +83,6 @@ class LogWorkoutBuilderNotifier extends ChangeNotifier {
 
     if (exerciseSets[exerciseIndex] is SingleExerciseSet) {
       if ((exerciseSets[exerciseIndex] as SingleExerciseSet).sets.isNotEmpty) {
-        print('reps');
-        print((exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['reps']);
         reps = (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['reps'];
         weight = (exerciseSets[exerciseIndex] as SingleExerciseSet).sets.last['weight'];
       }

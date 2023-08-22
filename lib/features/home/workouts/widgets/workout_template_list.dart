@@ -16,7 +16,8 @@ class WorkoutTemplateList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WorkoutTemplateNotifier workoutTemplateNotifier = Provider.of<WorkoutTemplateNotifier>(context);
+    WorkoutTemplateNotifier workoutTemplateNotifier =
+        Provider.of<WorkoutTemplateNotifier>(context);
     return SizedBox(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +41,7 @@ class WorkoutTemplateList extends StatelessWidget {
             child: Container(
               height: 2,
               width: 80,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).hintColor,
             ),
           ),
           const SizedBox(height: 15),
@@ -56,11 +57,18 @@ class WorkoutTemplateList extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CreateWorkoutTemplateScreen())),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const CreateWorkoutTemplateScreen())),
                     child: Center(
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundColor: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.1),
+                        backgroundColor: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .color!
+                            .withOpacity(0.1),
                         foregroundColor: Theme.of(context).textTheme.bodyLarge!.color!,
                         child: const Icon(Icons.add_rounded),
                       ),

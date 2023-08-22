@@ -32,10 +32,13 @@ class FilterExerciseButton extends StatelessWidget {
         );
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color?>(selected ? Theme.of(context).accentColor : Colors.white),
-        foregroundColor: MaterialStateProperty.all<Color?>(selected ? Colors.white : Color(0xFF616161)),
+        backgroundColor: MaterialStateProperty.all<Color?>(
+            selected ? Theme.of(context).hintColor : Colors.white),
+        foregroundColor: MaterialStateProperty.all<Color?>(
+            selected ? Colors.white : Color(0xFF616161)),
         side: MaterialStateProperty.all<BorderSide?>(
-          BorderSide(color: selected ? Colors.transparent : const Color(0xFF616161), width: 0.5),
+          BorderSide(
+              color: selected ? Colors.transparent : const Color(0xFF616161), width: 0.5),
         ),
       ),
       child: Text(title),

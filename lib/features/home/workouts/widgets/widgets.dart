@@ -17,3 +17,5 @@ export 'exercises/filter_exercise_button.dart';
 export 'workout_templates/set_row.dart';
 export 'workout_templates/super_set_card.dart';
 export 'pop_up_widgets/finish_logging_workout_dialog.dart';
+export 'pop_up_widgets/discard_workout_popup.dart';
+export 'log_workouts/image_display.dart';
